@@ -1,19 +1,27 @@
 
 use <library.scad>
 
-radius = 30;
-inner_radius = 20;
+radius = 50 / 2;
+inner_radius = 32 / 2;
 
 wall = 0.6;
-height = 100;
-motor_top = 80;
-motor_bottom = 20;
+height = 180;
+motor_top = 173;
+motor_bottom = 10;
 
 rib_count = 12;
 
+// circular grid fins
+/*
 fin_r = 50;
 fin_h = 5;
-fin_spacing = 5;
+fin_spacing = 10;
+*/
+
+// classic fins
+fin_r = radius + 50;
+fin_h = 59;
+fin_angle = 16;
 
 screw_outer_r = 2.5;
 screw_inner_r = 1;
@@ -33,6 +41,22 @@ module twisted_ribs(outer_r, inner_r, height, twist, count, wall) {
 
 
 module motor_holder() {
+        rotate([0, 0, 11])
+        translate([0, 0, -wall * 3])
+        difference () {
+            cylinder(r = radius - 2, h = wall * 3, $fn = rib_count);
+            translate([0, 0, -1])
+            cylinder(r = inner_radius, h = (wall * 3) + 2, $fn = rib_count);
+        }
+        
+        difference () {
+            cylinder(r = radius - 2, h = wall * 3);
+            
+            translate([0, 0, wall * 2])
+                cylinder(r = 3, h = wall);
+        }
+        
+        /*
 	intersection () {
 		for (i = [0 : 1]) {
 			rotate([0, 0, i * 180])
@@ -43,9 +67,22 @@ module motor_holder() {
 			//translate([inner_radius / 2, -radius, wall * 4])
 			//cube([wall * 4, radius * 2, wall * 4]);
 		}
-	
-		cylinder(r = radius, h = height); 
+                
+		cylinder(r = radius - 2, h = height); 
 	}
+        */
+        
+}
+
+
+module inner_ring(angle = 11) {
+    rotate([0, 0, angle])
+    //translate([0, 0, -wall * 3])
+    difference () {
+        cylinder(r = inner_radius + wall * 3, h = wall * 3, $fn = rib_count);
+        translate([0, 0, -1])
+        cylinder(r = inner_radius, h = (wall * 3) + 2, $fn = rib_count);
+    }
 }
 
 
@@ -73,17 +110,34 @@ module circular_grid_fin(outer_r, inner_r, wall, spacing, height) {
 }
 
 
+module classic_fins(outer_r, inner_r, wall, height, angle) {
+    for (i = [0 : 3]) {
+        rotate([0, 0, i * 90])
+        translate([-wall / 2, inner_r, 0])
+        difference () {
+            cube([wall, outer_r - inner_r, height]);
+          
+            color("red")
+            translate([-1, 0, height])
+            rotate([-angle, 0, 0])
+            cube([wall + 2, (outer_r - inner_r) + height, height]);
+        }
+    }
+}
+
+
 module hull(radius, inner_radius, height, wall, motor_bottom) {
 	difference () {
 		cylinder(r = radius, h = height);
-		cylinder(r = radius - wall, h = height);
+                translate([0, 0, -1])
+		cylinder(r = radius - wall, h = height + 2);
 	}
 
 
 	difference () {
 		union () {
 			twisted_ribs(
-				radius,
+				radius - (wall / 2),
 				inner_radius,
 				height,
 				60,
@@ -143,13 +197,19 @@ intersection () {
 }
 */
 
-circular_grid_fin(fin_r, radius - wall, wall, fin_spacing, fin_h);
+//circular_grid_fin(fin_r, radius - wall, wall, fin_spacing, fin_h);
+color("red")
+classic_fins(fin_r, radius - wall, wall, fin_h, fin_angle);
 
 
 difference () {
 	union () {
 		hull(radius, inner_radius, height, wall, motor_bottom);
-
+                
+                translate([0, 0, motor_bottom])
+                inner_ring(17);
+                
+                color("blue")
 		translate([0, 0, motor_top])
 		motor_holder();
 	}
@@ -164,4 +224,3 @@ difference () {
 	}
 	*/
 }
-
