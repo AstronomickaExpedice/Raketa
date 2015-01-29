@@ -1,4 +1,53 @@
 
+function sq(x) = x * x;
+
+
+module ogive(height, width, slices = 10, thickness = -1) {
+    radius = (height * height + width * width) / (2 * width);
+    
+    center_x = -radius + width;
+    center_y = 0;
+    
+    d = height / slices;
+    
+    echo("radius = ", radius);
+    echo("d = ", d);
+    
+    function w(y, r) = center_x + sqrt(
+        (r * r) - (y * y)
+    );
+    
+    difference () {
+        polygon(
+            points = concat([
+                [0, height],
+                [0, 0],
+                [width, 0]
+            ],
+            [ for (i = [0 : (slices - 1)]) [w(i * d, radius), i * d] ]),
+            paths = [ [ for (i = [0 : (slices + 2)]) i ] ]
+        );
+        
+        if (thickness > 0) {
+            polygon(
+                points = concat([
+                    [0, sqrt(sq(radius - thickness) - sq(radius - width))],
+                    [0, 0],
+                    [width - thickness, 0]
+                ],
+                [ for (i = [0 : (slices - 1)]) [w(i * d, radius - thickness), i * d] ]),
+                paths = [ [ for (i = [0 : (slices + 2)]) i ] ]
+            );
+        }
+    }
+}
+
+
+module ogive_nose_cone(radius, height, slices = 10, thickness = -1) {
+    rotate_extrude ($fn = slices)
+    ogive(height, radius, slices = slices, thickness = thickness);
+}
+
 
 module ring(radius, width, height) {
 	difference () {
@@ -30,6 +79,8 @@ module twisted_ribs(outer_r, inner_r, height, twist, count, wall) {
 	}
 }
 
+/*
 ccube(100, 100, 10);
 ring(50, 5, 20);
 ring(50, 2, 30);
+*/
