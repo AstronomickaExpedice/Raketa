@@ -19,6 +19,16 @@ module ccube(width, depth, height, z_center = false) {
 	}
 }
 
+module twisted_ribs(outer_r, inner_r, height, twist, count, wall) {
+	angle = 360 / count;
+	linear_extrude(height, twist = twist, slices = 20) {
+		for (i = [0 : (count - 1)]) {
+			rotate([0, 0, i * angle])
+			translate([0, inner_r])
+			square([wall, outer_r - inner_r]);
+		}
+	}
+}
 
 ccube(100, 100, 10);
 ring(50, 5, 20);

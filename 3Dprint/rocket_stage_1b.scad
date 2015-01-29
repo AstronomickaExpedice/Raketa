@@ -1,16 +1,11 @@
 use <library.scad>
+include <global_parameters.scad>
 
-radius = 50 / 2;
+
 inner_radius = 32 / 2;
-clear = 0.175;
-
-wall = 1.2;
-rib_wall = 0.6;
 height = 180;
 motor_top = 173;
 motor_bottom = 10;
-
-resolution = 50;
 
 rib_count = 12;
 
@@ -207,7 +202,7 @@ classic_fins(fin_r, radius - wall, 1.2 , fin_h, 3, fin_angle);
 
 difference () {
 	union () {
-		hull(radius, inner_radius, height, wall, motor_bottom, radius*2);
+		hull(radius, inner_radius, height, wall, motor_bottom, connection_lenght);
                 
                 translate([0, 0, motor_bottom])
                 inner_ring(17);
