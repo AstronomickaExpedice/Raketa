@@ -7,7 +7,7 @@
     <vertex><coordinates>
      <x>24.8029</x>
      <y>3.13333</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>24.8029</x>
@@ -22,12 +22,12 @@
     <vertex><coordinates>
      <x>25</x>
      <y>0</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>24.2146</x>
      <y>6.21725</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>24.2146</x>
@@ -37,237 +37,237 @@
     <vertex><coordinates>
      <x>-24.8029</x>
      <y>3.13333</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>-24.2146</x>
      <y>6.21725</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>-25</x>
      <y>3.06162e-15</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>-23.2444</x>
      <y>9.20311</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>-21.9077</x>
      <y>12.0438</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>-20.2254</x>
      <y>14.6946</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>-18.2242</x>
      <y>17.1137</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>-15.9356</x>
      <y>19.2628</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>-13.3957</x>
      <y>21.1082</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>-10.6445</x>
      <y>22.6207</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>-7.72542</x>
      <y>23.7764</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>-4.68453</x>
      <y>24.5572</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>-1.56976</x>
      <y>24.9507</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>1.56976</x>
      <y>24.9507</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>4.68453</x>
      <y>24.5572</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>7.72542</x>
      <y>23.7764</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>10.6445</x>
      <y>22.6207</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>13.3957</x>
      <y>21.1082</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>15.9356</x>
      <y>19.2628</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>18.2242</x>
      <y>17.1137</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>20.2254</x>
      <y>14.6946</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>21.9077</x>
      <y>12.0438</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>23.2444</x>
      <y>9.20311</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>24.8029</x>
      <y>-3.13333</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>24.2146</x>
      <y>-6.21725</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>23.2444</x>
      <y>-9.20311</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>21.9077</x>
      <y>-12.0438</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>20.2254</x>
      <y>-14.6946</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>18.2242</x>
      <y>-17.1137</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>15.9356</x>
      <y>-19.2628</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>13.3957</x>
      <y>-21.1082</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>10.6445</x>
      <y>-22.6207</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>7.72542</x>
      <y>-23.7764</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>4.68453</x>
      <y>-24.5572</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>1.56976</x>
      <y>-24.9507</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>-1.56976</x>
      <y>-24.9507</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>-4.68453</x>
      <y>-24.5572</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>-7.72542</x>
      <y>-23.7764</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>-10.6445</x>
      <y>-22.6207</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>-13.3957</x>
      <y>-21.1082</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>-15.9356</x>
      <y>-19.2628</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>-18.2242</x>
      <y>-17.1137</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>-20.2254</x>
      <y>-14.6946</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>-21.9077</x>
      <y>-12.0438</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>-23.2444</x>
      <y>-9.20311</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>-24.2146</x>
      <y>-6.21725</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>-24.8029</x>
      <y>-3.13333</y>
-     <z>50</z>
+     <z>0</z>
     </coordinates></vertex>
     <vertex><coordinates>
      <x>24.8029</x>

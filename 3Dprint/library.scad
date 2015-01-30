@@ -84,3 +84,21 @@ ccube(100, 100, 10);
 ring(50, 5, 20);
 ring(50, 2, 30);
 */
+
+module screw_anchor(outer_r, inner_r, depth, height, wall) {
+	rotate([30, 0, 0])
+	difference () {
+		//translate([-outer_r / 2 - wall, outer_r / 2, 0])
+		translate([-outer_r - wall, -wall, 0])
+		cube([(outer_r + wall) * 2, depth, height]);
+
+		//ccube(outer_r + wall * 2, outer_r + wall * 2, height);
+		translate([0, outer_r, 0]) {
+		cylinder(r = outer_r, h = height / 2);
+		cylinder(r = inner_r, h = height);
+		
+		translate([-outer_r, 0, 0])
+		cube([outer_r * 2, depth, height / 2]);
+		}
+	}
+}

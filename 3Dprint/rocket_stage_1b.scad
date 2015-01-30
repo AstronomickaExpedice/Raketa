@@ -3,11 +3,9 @@ include <global_parameters.scad>
 
 
 inner_radius = 32 / 2;
-height = 180;
+height = 185;
 motor_top = 173;
 motor_bottom = 10;
-
-rib_count = 12;
 
 // circular grid fins
 /*
@@ -18,7 +16,7 @@ fin_spacing = 10;
 
 // classic fins
 fin_r = radius + 50;
-fin_h = 60;
+fin_h = 25;
 fin_angle = 16;
 
 screw_outer_r = 2.5;
@@ -26,29 +24,17 @@ screw_inner_r = 1;
 screw_length = 10;
 
 
-module twisted_ribs(outer_r, inner_r, height, twist, count, wall) {
-	angle = 360 / count;
-	linear_extrude(height, twist = twist, slices = 20) {
-		for (i = [0 : (count - 1)]) {
-			rotate([0, 0, i * angle])
-			translate([0, inner_r])
-			square([wall, outer_r - inner_r]);
-		}
-	}
-}
-
-
-module motor_holder() {
+module motor_holder(wall) {
         rotate([0, 0, 11])
         translate([0, 0, -wall * 3])
         difference () {
-            cylinder(r = radius - 2, h = wall * 3, $fn = resolution);
+            cylinder(r = radius - wall, h = wall * 3, $fn = resolution);
             translate([0, 0, -1])
             cylinder(r = inner_radius, h = (wall * 3) + 2, $fn = resolution);
         }
         
         difference () {
-            cylinder(r = radius - 2, h = wall * 3, $fn = resolution);
+            cylinder(r = radius - wall, h = wall * 3, $fn = resolution);
             
             translate([0, 0, wall * 2])
                 cylinder(r = 3, h = wall, $fn = resolution);
@@ -56,12 +42,12 @@ module motor_holder() {
 }
 
 
-module inner_ring(angle = 11) {
+module inner_ring(angle = 11, segments) {
     rotate([0, 0, angle])
     //translate([0, 0, -wall * 3])
     difference () {
-        cylinder(r = inner_radius + wall*2, h = wall*2, $fn=resolution);
-        cylinder(r = inner_radius, h = wall*2, $fn=resolution);
+        cylinder(r = inner_radius + wall*3, h = wall*2, $fn=segments);
+        cylinder(r = inner_radius + wall, h = wall*2, $fn=segments);
     }
 }
 
@@ -103,6 +89,19 @@ module classic_fins(outer_r, inner_r, wall, height, count, angle) {
             cube([wall + 2, (outer_r - inner_r) + height, height]);
         }
     }
+    inner_points = [ for (i = [0 : count - 1]) [sin(i * 360/count) * (outer_r) , cos(i * 360/count) * (outer_r)]];
+    outer_points = [ for (i = [0 : count - 1]) [sin(i * 360/count) * (outer_r + wall) , cos(i * 360/count) * (outer_r+wall)]];
+    polygon_paths = [ [ for (i = [0 : count-1]) i ], [ for (i = [count : 2*count-1]) i ]];
+
+    echo("outer points = ", outer_points);
+    echo("inner points = ", inner_points);
+    echo("paths = ", polygon_paths);
+    
+    linear_extrude(height = height - (tan(angle)*(outer_r - inner_r)))
+        polygon(
+            points =  concat(outer_points, inner_points),
+            paths = polygon_paths
+        );
 }
 
 
@@ -163,25 +162,6 @@ module hull(radius, inner_radius, height, wall, motor_bottom, connection_lenght)
 }
 
 
-module screw_anchor(outer_r, inner_r, depth, height, wall) {
-	rotate([30, 0, 0])
-	difference () {
-		//translate([-outer_r / 2 - wall, outer_r / 2, 0])
-		translate([-outer_r - wall, -wall, 0])
-		cube([(outer_r + wall) * 2, depth, height]);
-
-		//ccube(outer_r + wall * 2, outer_r + wall * 2, height);
-		translate([0, outer_r, 0]) {
-		cylinder(r = outer_r, h = height / 2);
-		cylinder(r = inner_r, h = height);
-		
-		translate([-outer_r, 0, 0])
-		cube([outer_r * 2, depth, height / 2]);
-		}
-	}
-}
-
-
 /*
 translate([0, 0, height - 20])
 intersection () {
@@ -197,19 +177,19 @@ intersection () {
 
 //circular_grid_fin(fin_r, radius - wall, wall, fin_spacing, fin_h);
 color("red")
-classic_fins(fin_r, radius - wall, 1.2 , fin_h, 3, fin_angle);
+classic_fins(fin_r, radius - rib_wall, rib_wall , fin_h, 9, fin_angle);
 
 
 difference () {
 	union () {
-		hull(radius, inner_radius, height, wall, motor_bottom, connection_lenght);
+		hull(radius, inner_radius, height, rib_wall, motor_bottom, connection_lenght);
                 
-                translate([0, 0, motor_bottom])
-                inner_ring(17);
+                translate([0, 0, motor_bottom + 5])
+                inner_ring(5, rib_count);
                 
                 color("blue")
 		translate([0, 0, motor_top])
-		motor_holder();
+		motor_holder(wall);
 	}
 	
 /*	translate([0, 0, height - 20])

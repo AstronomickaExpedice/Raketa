@@ -6,11 +6,9 @@ height = 185;
 motor_top = 173;
 motor_bottom = 10;
 
-rib_count = 18;
-
 difference () {                 // hull shell
     cylinder(r = radius, h = connection_lenght , $fn=resolution);
-    cylinder(r = radius - wall, h = connection_lenght, $fn=resolution);
+    cylinder(r = radius - rib_wall, h = connection_lenght, $fn=resolution);
 }
 
 translate([0, 0, connection_lenght - clear ]){   // remove ribs to place stage connection section
@@ -67,8 +65,39 @@ difference () {
 }
 
 
+// launch rocket holder
+module launch_holder(rocket_radius, wire_diameter, height, wall, angle) {
+    translate([wire_diameter/2 + wall , 0, 0])
+    difference () {                 // hull shell of connection part.
+        union (){
+            cylinder(r = wire_diameter/2 + wall, h = height , $fn=resolution/2);
+            translate([-(wire_diameter+3*wall) , -(wire_diameter+wall), 0])
+            cube(size = [(wire_diameter + 3*wall),(wire_diameter + 6*wall),height]);
+        }
+        cylinder(r = wire_diameter/2, h = height, $fn=resolution/2);
+        translate([-(rocket_radius + wire_diameter/2 + wall ),0, 0])
+        cylinder(r = + rocket_radius, h = height , $fn=resolution);
+
+        translate([ -1,(wire_diameter + 2*wall), 0])
+        cylinder(r = wire_diameter/2 + wall, h = height , $fn=resolution/2);
+        translate([ -1,-(wire_diameter + 2*wall), 0])
+        cylinder(r = wire_diameter/2 + wall, h = height , $fn=resolution/2);
+        translate([0 , 0, -height])
+        rotate([0, -angle, 0])
+        cube(2*height, center = true);
+
+        translate([0 , 0, 2*height])
+        rotate([0, angle, 0])
+        cube(2*height, center = true);
+    }
+};
+
+translate([radius, 0, connection_lenght/2 - 35/2])
+launch_holder(radius, 5, 35, wall, 30);
+
 /*
 // object modifier
-translate([0, 0, connection_lenght])
-cylinder(r = radius, h = height - connection_lenght , $fn=resolution);
+translate([0, 0, 0])
+cylinder(r = radius, h = height , $fn=resolution);
 */
+

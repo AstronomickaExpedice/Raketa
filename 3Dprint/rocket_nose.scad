@@ -11,13 +11,14 @@ rib_count = 18;
 cone_height = 100;
 cone_connection_height = 20;
 
+
 //////////
 //
 //      Rocket nose cone
 //
 /////////
 
-translate([0, 0, 100 ])   // separate nose from the hull
+/*translate([0, 0, 100 ])   // separate nose from the hull
 
 
 translate([0, 0, height - cone_connection_height ])   // move cone to the top of the rocket.
@@ -27,11 +28,11 @@ union () {
 
     difference () {                 // bottom connection part  of the hull shell. 
         cylinder(r = radius, h = cone_connection_height , $fn=resolution);
-        cylinder(r = radius - rib_wall, h = cone_connection_height, $fn=resolution);
+        cylinder(r = radius - wall, h = cone_connection_height, $fn=resolution);
     }    
 }
 
-
+*/
 
 //////////
 //
@@ -39,7 +40,7 @@ union () {
 //
 /////////
 
-
+/*
 difference () {                 // bottom connection part  of the hull shell. 
     cylinder(r = radius, h = connection_lenght , $fn=resolution);
     cylinder(r = radius - rib_wall, h = connection_lenght, $fn=resolution);
@@ -71,18 +72,17 @@ translate([0, 0, connection_lenght - clear ]){   // remove ribs to place stage c
 // hull of the connection part. 
 translate([0, 0, height - cone_connection_height])
 difference () {                 // hull shell of connection part.
-        cylinder(r = radius - wall - clear, h = cone_connection_height , $fn=resolution);
-        cylinder(r = radius - 2*wall - clear, h = cone_connection_height, $fn=resolution);
+        cylinder(r = radius - wall - 2*clear, h = cone_connection_height , $fn=resolution);
+        cylinder(r = radius - 2*wall - 2*clear, h = cone_connection_height, $fn=resolution);
 }
 
 // partition for parashute explosive charge.
 translate([0, 0, height - cone_connection_height - wall])        
 cylinder(r = radius, h = 2*wall, $fn=resolution );
-
-
-
-/*
-// object modifier
-translate([0, 0, connection_lenght])
-cylinder(r = radius, h = height - connection_lenght , $fn=resolution);
 */
+
+
+
+// object modifier
+//translate([0, 0, height - cone_connection_height - wall])
+cylinder(r = radius + wall, h = height - cone_connection_height - wall, $fn=resolution);
