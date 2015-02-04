@@ -8,3 +8,5 @@ rib_count = 18;
 connection_lenght = radius*2;
 
 resolution = 50;
+
+stage_height = 185;

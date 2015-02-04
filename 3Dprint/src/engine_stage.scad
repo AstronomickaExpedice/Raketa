@@ -1,28 +1,15 @@
 use <library.scad>
 include <global_parameters.scad>
 
-
 inner_radius = 32 / 2;
-height = 185;
+height = stage_height;
 motor_top = 173;
 motor_bottom = 10;
-
-// circular grid fins
-/*
-fin_r = 50;
-fin_h = 5;
-fin_spacing = 10;
-*/
 
 // classic fins
 fin_r = radius + 50;
 fin_h = 25;
 fin_angle = 16;
-
-screw_outer_r = 2.5;
-screw_inner_r = 1;
-screw_length = 10;
-
 
 module motor_holder(wall) {
         rotate([0, 0, 11])
@@ -52,31 +39,7 @@ module inner_ring(angle = 11, segments) {
 }
 
 
-module circular_grid_fin(outer_r, inner_r, wall, spacing, height) {
-	ring(outer_r, wall, height);
-	
-	c = (outer_r * 2) / spacing;
-	
-	difference () {
-	intersection () {
-		union () {
-			for (i = [1 : (c - 1)]) {
-				translate([-outer_r + i * spacing - wall / 2, -outer_r, 0])
-				cube([wall, outer_r * 2, height]);
-
-				translate([-outer_r, -outer_r + i * spacing - wall / 2, 0])
-				cube([outer_r * 2, wall, height]);
-			}
-		}
-		
-		cylinder(r = outer_r, h = height);
-	}
-	cylinder(r = inner_r, h = height);
-	}
-}
-
-
-module classic_fins(outer_r, inner_r, wall, height, count, angle) {
+module fins(outer_r, inner_r, wall, height, count, angle) {
     for (i = [1 : count]) {
         rotate([0, 0, i * 360/count])
         translate([-wall / 2, inner_r, 0])
@@ -161,42 +124,20 @@ module hull(radius, inner_radius, height, wall, motor_bottom, connection_lenght)
         }        
 }
 
+module engine_stage () {
+    difference () {
+	    union () {
+		    hull(radius, inner_radius, height, rib_wall, motor_bottom, connection_lenght);
+                    
+                    translate([0, 0, motor_bottom + 5])
+                    inner_ring(5, rib_count);
+                    
+                    color("blue")
+		    translate([0, 0, motor_top])
+		    motor_holder(wall);
+	    }
+    }
 
-/*
-translate([0, 0, height - 20])
-intersection () {
-	for (i = [0 : 1]) {
-		rotate([0, 0, i * 180])
-		translate([0, radius, 0])
-		screw_anchor(screw_outer_r, screw_inner_r, radius, screw_length * 2, wall * 3);
-	}
-	translate([0, 0, -height / 2])
-	cylinder(r = radius, h = height);
-}*/
-
-
-//circular_grid_fin(fin_r, radius - wall, wall, fin_spacing, fin_h);
-color("red")
-classic_fins(fin_r, radius - rib_wall, rib_wall , fin_h, 9, fin_angle);
-
-
-difference () {
-	union () {
-		hull(radius, inner_radius, height, rib_wall, motor_bottom, connection_lenght);
-                
-                translate([0, 0, motor_bottom + 5])
-                inner_ring(5, rib_count);
-                
-                color("blue")
-		translate([0, 0, motor_top])
-		motor_holder(wall);
-	}
-	
-/*	translate([0, 0, height - 20])
-	for (i = [0 : 1]) {
-		rotate([0, 0, i * 180])
-		translate([0, radius, 0])
-		translate([0, outer_r, 0])
-		cylinder(r = screw_outer_r, h = screw_length);
-	}*/
+    //color("red")
+    fins(fin_r, radius - rib_wall, rib_wall , fin_h, 9, fin_angle);
 }
