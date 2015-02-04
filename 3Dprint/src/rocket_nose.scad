@@ -18,10 +18,10 @@ cone_connection_height = 20;
 //
 /////////
 
-translate([0, 0, 100 ])   // separate nose from the hull
+//translate([0, 0, 100 ])   // separate nose from the hull
 
 
-translate([0, 0, height - cone_connection_height ])   // move cone to the top of the rocket.
+//translate([0, 0, height - cone_connection_height ])   // move cone to the top of the rocket.
 union () {
     translate([0, 0, cone_connection_height ])   // move cone to the top of the rocket.
     ogive_nose_cone(radius, cone_height, resolution, wall);
@@ -40,7 +40,7 @@ union () {
 //
 /////////
 
-
+/*
 difference () {                 // bottom connection part  of the hull shell. 
     cylinder(r = radius, h = connection_lenght , $fn=resolution);
     cylinder(r = radius - rib_wall, h = connection_lenght, $fn=resolution);
@@ -86,3 +86,4 @@ cylinder(r = radius, h = 2*wall, $fn=resolution );
 // object modifier
 //translate([0, 0, height - cone_connection_height - wall])
 //cylinder(r = radius + wall, h = height - cone_connection_height - wall, $fn=resolution);
+*/

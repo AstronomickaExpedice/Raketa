@@ -1,51 +1,63 @@
 
 function sq(x) = x * x;
 
-
-module ogive(height, width, slices = 10, thickness = -1) {
-    radius = (height * height + width * width) / (2 * width);
+module ogive_nose_cone(radius, height, slices = 10, thickness = -1) {   //create ogive nose cone with rounded top tip
     
-    center_x = -radius + width;
+    rounding_level = height -  thickness/2;
+
+    ogive_radius = (height * height + radius * radius) / (2 * radius);
+    
+    center_x = -ogive_radius + radius;
     center_y = 0;
     
     d = height / slices;
+    rounding_sphere_radius = thickness/3;
+    rounding_radius = w(rounding_level, ogive_radius); // radius of cone at rounding level
+
+    rounding_sphere_height = rounding_sphere_radius - sqrt(sq(rounding_sphere_radius) - sq(rounding_radius));
     
-    echo("radius = ", radius);
-    echo("d = ", d);
+    echo("rounding_sphere_height=", rounding_sphere_height);
     
     function w(y, r) = center_x + sqrt(
         (r * r) - (y * y)
     );
     
+    
     difference () {
-        polygon(
-            points = concat([
-                [0, height],
-                [0, 0],
-                [width, 0]
-            ],
-            [ for (i = [0 : (slices - 1)]) [w(i * d, radius), i * d] ]),
-            paths = [ [ for (i = [0 : (slices + 2)]) i ] ]
-        );
-        
-        if (thickness > 0) {
+        rotate_extrude ($fn = slices)
+        difference () {
             polygon(
                 points = concat([
-                    [0, sqrt(sq(radius - thickness) - sq(radius - width))],
+                    [0, height],
                     [0, 0],
-                    [width - thickness, 0]
+                    [radius, 0]
                 ],
-                [ for (i = [0 : (slices - 1)]) [w(i * d, radius - thickness), i * d] ]),
+                [ for (i = [0 : (slices - 1)]) [w(i * d, ogive_radius), i * d] ]),
                 paths = [ [ for (i = [0 : (slices + 2)]) i ] ]
             );
+            
+            if (thickness > 0) {
+                polygon(
+                    points = concat([
+                        [0, sqrt(sq(ogive_radius - thickness) - sq(ogive_radius - radius))],
+                        [0, 0],
+                        [radius - thickness, 0]
+                    ],
+                    [ for (i = [0 : (slices - 1)]) [w(i * d, ogive_radius - thickness), i * d] ]),
+                    paths = [ [ for (i = [0 : (slices + 2)]) i ] ]
+                );
+            }
         }
+        
+        translate([0, 0 , rounding_level])      // top rounding to make the cone printable. 
+        cylinder(r = radius, h = height);
     }
-}
-
-
-module ogive_nose_cone(radius, height, slices = 10, thickness = -1) {
-    rotate_extrude ($fn = slices)
-    ogive(height, radius, slices = slices, thickness = thickness);
+    translate([0, 0 , rounding_level])
+    intersection() {
+        cylinder(r=radius, h=height);
+        translate([0, 0 , - rounding_sphere_radius + rounding_sphere_height ])
+        sphere(rounding_sphere_radius, $fn=slices);
+    }
 }
 
 
