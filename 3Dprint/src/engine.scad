@@ -1,0 +1,17 @@
+THICKNESS = 3;
+DIAMETER = 30;
+LENGHT = 130;
+NOZZLE_THROAT = 4;
+NOZZLE_OUTCOME = 10;
+NOZZLE_LENGHT = 7;
+$fn = 50;
+
+use <library.scad>
+
+
+
+//tube(5, 10, 15);
+tube_twisted_in(1, 10, NOZZLE_LENGHT + NOZZLE_LENGHT / 2, 90, 30, 3);
+//translate([0, DIAMETER + 10, 0]) nozzle_die(THICKNESS, DIAMETER, NOZZLE_LENGHT, NOZZLE_THROAT, NOZZLE_OUTCOME);
+//color([1, 0, 0]) tube(THICKNESS, DIAMETER, LENGHT);
+//color([0, 1, 0]) tube((DIAMETER - NOZZLE_THROAT) / 2 - 1.25, NOZZLE_THROAT + 2.25, LENGHT - NOZZLE_LENGHT - 2.5);

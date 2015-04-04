@@ -114,3 +114,29 @@ module screw_anchor(outer_r, inner_r, depth, height, wall) {
 		}
 	}
 }
+
+
+module tube(wall_thickness, diameter, lenght) {
+    difference() {
+        cylinder(d = diameter + wall_thickness * 2, h = lenght);
+        translate([0, 0, -0.05]) cylinder(d = diameter, h = lenght + 0.1);
+    }
+}
+
+module tube_twisted_in(wall_thickness, diameter, lenght, twist, count, teeth){
+    difference() {
+        tube(wall_thickness, diameter, lenght);
+        translate([0, 0, -0.05]) twisted_ribs(diameter / 2, 0, lenght + 0.1, twist, count, teeth);
+    }
+}
+
+module nozzle_die(wall_thickness, diameter, nozzle_lenght, dthroat, doutcome) {
+    cylinder(d = diameter + wall_thickness + 2, h = wall_thickness);
+    
+    translate([0, 0, wall_thickness]) cylinder(d = diameter - 2, h = 2.5);
+    
+    translate([0, 0, wall_thickness + 2.5])cylinder(d1 = diameter - 2, d2 = doutcome, h = nozzle_lenght / 2);
+    
+    translate([0, 0, wall_thickness + nozzle_lenght / 2 + 2.5])cylinder(d1 = doutcome, d2 = dthroat, h = nozzle_lenght);
+    translate([0, 0, nozzle_lenght + wall_thickness + 2.5 + nozzle_lenght / 2]) cylinder(d = dthroat, h = nozzle_lenght + 5);
+}
