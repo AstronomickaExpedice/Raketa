@@ -86,7 +86,7 @@ module twisted_ribs(outer_r, inner_r, height, twist, count, wall) {
 		for (i = [0 : (count - 1)]) {
 			rotate([0, 0, i * angle])
 			translate([0, inner_r])
-			square([wall, outer_r - inner_r]);
+			square([wall, wall]);
 		}
 	}
 }
@@ -115,28 +115,28 @@ module screw_anchor(outer_r, inner_r, depth, height, wall) {
 	}
 }
 
-
-module tube(wall_thickness, diameter, lenght) {
+module tube(wall_thickness, radius, lenght) {
     difference() {
-        cylinder(d = diameter + wall_thickness * 2, h = lenght);
-        translate([0, 0, -0.05]) cylinder(d = diameter, h = lenght + 0.1);
+        cylinder(r = radius + wall_thickness, h = lenght);
+        translate([0, 0, -0.05]) cylinder(r = radius, h = lenght + 0.1);
     }
 }
 
-module tube_twisted_in(wall_thickness, diameter, lenght, twist, count, teeth){
-    difference() {
-        tube(wall_thickness, diameter, lenght);
-        translate([0, 0, -0.05]) twisted_ribs(diameter / 2, 0, lenght + 0.1, twist, count, teeth);
+module tube_twists_in(wall_thickness, radius, lenght, teeth_twist, teeth_count, teeth_size) {
+    difference () {
+        twisted_ribs(radius, radius - teeth_size, lenght, teeth_twist, teeth_count, teeth_size);						
+        cylinder(r1 = radius - lenght, r2 = radius - wall_thickness, h = lenght);
     }
+    tube(wall_thickness, radius, lenght);
 }
 
-module nozzle_die(wall_thickness, diameter, nozzle_lenght, dthroat, doutcome) {
-    cylinder(d = diameter + wall_thickness + 2, h = wall_thickness);
+module nozzle_die(wall_thickness, radius, nozzle_lenght, r_throat, r_outcome) {
+    cylinder(r = radius + wall_thickness + 2, h = wall_thickness);
     
-    translate([0, 0, wall_thickness]) cylinder(d = diameter - 2, h = 2.5);
+    translate([0, 0, wall_thickness]) cylinder(r = radius, h = 2.5);
     
-    translate([0, 0, wall_thickness + 2.5])cylinder(d1 = diameter - 2, d2 = doutcome, h = nozzle_lenght / 2);
+    translate([0, 0, wall_thickness + 2.5])cylinder(r1 = radius, r2 = r_outcome, h = nozzle_lenght / 2);
     
-    translate([0, 0, wall_thickness + nozzle_lenght / 2 + 2.5])cylinder(d1 = doutcome, d2 = dthroat, h = nozzle_lenght);
-    translate([0, 0, nozzle_lenght + wall_thickness + 2.5 + nozzle_lenght / 2]) cylinder(d = dthroat, h = nozzle_lenght + 5);
+    translate([0, 0, wall_thickness + nozzle_lenght / 2 + 2.5])cylinder(r1 = r_outcome, r2 = r_throat, h = nozzle_lenght);
+    translate([0, 0, nozzle_lenght + wall_thickness + 2.5 + nozzle_lenght / 2]) cylinder(r = r_throat, h = nozzle_lenght + 5);
 }
