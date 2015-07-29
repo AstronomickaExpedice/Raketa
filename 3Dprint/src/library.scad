@@ -141,3 +141,9 @@ module nozzle_die(wall_thickness, radius, nozzle_lenght, r_throat, r_outcome) {
     translate([0, 0, wall_thickness + nozzle_lenght / 2 + 2.5])cylinder(r1 = r_outcome, r2 = r_throat, h = nozzle_lenght);
     translate([0, 0, nozzle_lenght + wall_thickness + 2.5 + nozzle_lenght / 2]) cylinder(r = r_throat, h = nozzle_lenght + 5);
 }
+
+module concentric_cylinders(r, l, thickness, cylinders, spacing) {
+    for(i = [0 : cylinders - 1]) {
+        tube(thickness, i * (spacing + thickness) + r, l);
+    }
+}
