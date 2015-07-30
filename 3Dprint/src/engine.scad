@@ -22,7 +22,7 @@ color([0, 1, 0]) union() {
 
 //engine fuel 
 /*color([1, 0, 0])translate([0, -RADIUS - 50, 0]) tube(RADIUS - NOZZLE_THROAT_RADIUS - 3*TOLERANCE, NOZZLE_THROAT_RADIUS + 2.25, LENGHT);
-*/
+
 // engine cup 
 
 /*color([1, 1, 0]) translate([RADIUS + 50, 0, 0]) 
