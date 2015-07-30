@@ -4,7 +4,7 @@ LENGHT = 120;
 NOZZLE_THROAT_RADIUS = 2;
 NOZZLE_OUTCOME_RADIUS = 5;
 NOZZLE_LENGHT = 7;
-TOLERANCE = 0.25;
+TOLERANCE = 0.5;
 $fn = 50;
 
 use <library.scad>
@@ -23,7 +23,7 @@ color([0, 1, 0]) union() {
 
 
 //engine fuel 
-//color([1, 0, 0])translate([0, -RADIUS - 50, 0]) tube(RADIUS - NOZZLE_THROAT_RADIUS - 1, NOZZLE_THROAT_RADIUS + 2.25, LENGHT - NOZZLE_LENGHT - 2.5);
+#color([1, 0, 0]) tube(RADIUS - NOZZLE_THROAT_RADIUS - TOLERANCE * 6, NOZZLE_THROAT_RADIUS + TOLERANCE * 4, LENGHT - NOZZLE_LENGHT - 2.5);
 
 // engine cup 
 
