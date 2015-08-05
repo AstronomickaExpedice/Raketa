@@ -132,14 +132,15 @@ module tube_twists_in(wall_thickness, radius, lenght, teeth_twist, teeth_count, 
 }
 
 module nozzle_die(wall_thickness, radius, nozzle_lenght, r_throat, r_outcome) {
-    cylinder(r = radius + wall_thickness + 2, h = wall_thickness);
-    
-    translate([0, 0, wall_thickness]) cylinder(r = radius, h = 2.5);
-    
-    translate([0, 0, wall_thickness + 2.5])cylinder(r1 = radius, r2 = r_outcome, h = nozzle_lenght / 2);
-    
-    translate([0, 0, wall_thickness + nozzle_lenght / 2 + 2.5])cylinder(r1 = r_outcome, r2 = r_throat, h = nozzle_lenght);
-    translate([0, 0, nozzle_lenght + wall_thickness + 2.5 + nozzle_lenght / 2]) cylinder(r = r_throat, h = nozzle_lenght + 5);
+difference () {
+    union () {
+        cylinder(r = radius + wall_thickness + 2, h = wall_thickness);    
+        translate([0, 0, wall_thickness]) cylinder(r = radius, h = 2.5);
+        translate([0, 0, wall_thickness + 2.5])cylinder(r1 = radius, r2 = r_outcome, h = nozzle_lenght / 2);
+        translate([0, 0, wall_thickness + nozzle_lenght / 2 + 2.5])cylinder(r1 = r_outcome, r2 = r_throat, h = nozzle_lenght);
+    }
+    cylinder(r = r_throat, h = 3*nozzle_lenght);
+}
 }
 
 module concentric_cylinders(r, l, thickness, cylinders, spacing) {
