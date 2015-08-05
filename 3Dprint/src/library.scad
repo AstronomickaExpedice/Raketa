@@ -147,3 +147,21 @@ module concentric_cylinders(r, l, thickness, cylinders, spacing) {
         tube(thickness, i * (spacing + thickness) + r, l);
     }
 }
+
+module pcb_mount(r, lenght, wall_thickness, pcb_thickness) {
+    union() {
+        translate([-r, -(wall_thickness * 2 + pcb_thickness) / 2, 0]) union() {
+            cube([wall_thickness * 2 + 4, wall_thickness * 2 + pcb_thickness, wall_thickness]);
+            cube([wall_thickness, pcb_thickness + wall_thickness * 2, lenght + wall_thickness]);
+            cube([wall_thickness * 2 + 4, wall_thickness, lenght + wall_thickness]);
+            translate([0, pcb_thickness + wall_thickness, 0]) cube([wall_thickness * 2 + 4, wall_thickness, lenght + wall_thickness]);
+    }
+    
+        translate([r, (wall_thickness * 2 + pcb_thickness) / 2, ]) rotate([0, 0, 180])  union() {
+            cube([wall_thickness * 2 + 4, wall_thickness * 2 + pcb_thickness, wall_thickness]);
+            cube([wall_thickness, pcb_thickness + wall_thickness * 2, lenght + wall_thickness]);
+            cube([wall_thickness * 2 + 4, wall_thickness, lenght + wall_thickness]);
+            translate([0, pcb_thickness + wall_thickness, 0]) cube([wall_thickness * 2 + 4, wall_thickness, lenght + wall_thickness]);
+        }
+    }
+}
