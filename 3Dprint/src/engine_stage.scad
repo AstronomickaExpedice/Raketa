@@ -13,7 +13,7 @@ fin_angle = 16;
 
 module motor_holder(wall) {
 	translate([0, 0, -wall * 3])
-	cylinder(r = radius - wall, h = wall * 3, $fn = resolution);    
+	cylinder(r = radius - wall - clear, h = wall * 3, $fn = resolution);    
 }
 
 
@@ -137,4 +137,4 @@ module engine_stage () {
 }
 
 
-//engine_stage();
+engine_stage();
