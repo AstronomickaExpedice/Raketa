@@ -12,20 +12,8 @@ fin_h = 25;
 fin_angle = 16;
 
 module motor_holder(wall) {
-        rotate([0, 0, 11])
-        translate([0, 0, -wall * 3])
-        difference () {
-            cylinder(r = radius - wall, h = wall * 3, $fn = resolution);
-            translate([0, 0, -1])
-            cylinder(r = inner_radius, h = (wall * 3) + 2, $fn = resolution);
-        }
-        
-        difference () {
-            cylinder(r = radius - wall, h = wall * 3, $fn = resolution);
-            
-            translate([0, 0, wall * 2])
-                cylinder(r = 3, h = wall, $fn = resolution);
-        }        
+	translate([0, 0, -wall * 3])
+	cylinder(r = radius - wall, h = wall * 3, $fn = resolution);    
 }
 
 
@@ -74,7 +62,7 @@ module hull(radius, inner_radius, height, wall, motor_bottom, connection_lenght)
 		cylinder(r = radius - wall, h = height - connection_lenght, $fn=resolution);
 	}
 
-
+/*
 	difference () {
 		union () {
 			twisted_ribs(
@@ -99,7 +87,7 @@ module hull(radius, inner_radius, height, wall, motor_bottom, connection_lenght)
                         cylinder(r = radius, h = connection_lenght , $fn=resolution);
                         cylinder(r = radius- 1.5*wall, h = connection_lenght, $fn=resolution);
                 }
-        }
+        }*/
 
         translate([0, 0, height - connection_lenght])
         difference () {                 // hull shell
@@ -109,35 +97,44 @@ module hull(radius, inner_radius, height, wall, motor_bottom, connection_lenght)
 
         translate([0, 0, height - connection_lenght - 2*wall])        
         difference () {                
-            cylinder(               // bevel/smooth transformation between connection and rest of the rocket hull 
-                    r = radius,
-                    h = 2*wall,
-                    $fn=resolution
-            );
-
-            cylinder(               // bevel/smooth transformation between connection and rest of the rocket hull 
-                    r1 = radius - wall,
-                    r2 = radius - 2*wall ,
-                    h = 2*wall,
-                    $fn=resolution
-            );
+            cylinder(r=radius, h=2*wall, $fn=resolution);
+            cylinder(r1=radius - wall, r2=radius - 2*wall, h=2*wall, $fn=resolution);
         }        
+}
+
+module lock_out(radius, inner_radius, height, wall, motor_bottom, connection_lenght){
+		translate([radius-radius/3+wall,0,height-connection_lenght/2])
+		sphere(r=radius/3);
+		translate([-radius+radius/3-wall,0,height-connection_lenght/2])
+		sphere(r=radius/3);
+	}
+module lock_in(radius, inner_radius, height, wall, motor_bottom, connection_lenght){
+		translate([radius-radius/3+wall,0,height-connection_lenght/2])
+		sphere(r=radius/3-wall);
+		translate([-radius+radius/3-wall,0,height-connection_lenght/2])
+		sphere(r=radius/3-wall);
+		translate([0,0,height-(connection_lenght/2) ]);
+		cylinder(r=radius-2*wall, h=radius);
+		translate([0,0,height-(connection_lenght/2)-(radius/3) ])
+		cylinder(r=radius-2*wall, h=(radius/3)*2);
 }
 
 module engine_stage () {
     difference () {
 	    union () {
-		    hull(radius, inner_radius, height, rib_wall, motor_bottom, connection_lenght);
-                    
-                    translate([0, 0, motor_bottom + 5])
-                    inner_ring(5, rib_count);
-                    
-                    color("blue")
+		    hull(radius, inner_radius, height, wall, motor_bottom, connection_lenght);
 		    translate([0, 0, motor_top])
 		    motor_holder(wall);
+			lock_out(radius, inner_radius, height, wall, motor_bottom, connection_lenght);
 	    }
+		union(){
+			lock_in(radius, inner_radius, height, wall, motor_bottom, connection_lenght);
+			
+		}
     }
 
-    //color("red")
-    fins(fin_r, radius - rib_wall, rib_wall , fin_h, 9, fin_angle);
+    fins(fin_r, radius - wall, wall , fin_h, 9, fin_angle);
 }
+
+
+//engine_stage();
