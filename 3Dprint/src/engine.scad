@@ -10,8 +10,8 @@ $fn = 100;
 use <library.scad>
 
 
-/*color([0, 0, 1]) translate([0, RADIUS + 50, 0]) nozzle_die(THICKNESS, RADIUS - TOLERANCE, NOZZLE_LENGHT, NOZZLE_THROAT_RADIUS, NOZZLE_OUTCOME_RADIUS);
-*/
+color([0, 0, 1]) translate([0, RADIUS + 50, 0]) nozzle_die(THICKNESS, RADIUS - TOLERANCE, NOZZLE_LENGHT, NOZZLE_THROAT_RADIUS, NOZZLE_OUTCOME_RADIUS);
+
 
 /*
 color([0, 1, 0]) union() {
@@ -20,7 +20,7 @@ color([0, 1, 0]) union() {
 */
 
 
-//engine fuel 
+/*//engine fuel 
 color([1, 0, 0]) translate([0, -RADIUS - 50, 0]) tube(RADIUS - NOZZLE_THROAT_RADIUS - TOLERANCE * 6, NOZZLE_THROAT_RADIUS + TOLERANCE * 4, 15);
     translate([0, -RADIUS - 50, 10])
         tube((RADIUS - NOZZLE_THROAT_RADIUS - TOLERANCE * 6) / 2, NOZZLE_THROAT_RADIUS + TOLERANCE * 4, LENGHT);
