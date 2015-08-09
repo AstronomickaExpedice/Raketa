@@ -104,19 +104,19 @@ module hull(radius, inner_radius, height, wall, motor_bottom, connection_lenght)
 
 module lock_out(radius, inner_radius, height, wall, motor_bottom, connection_lenght){
 		translate([radius-radius/3+wall,0,height-connection_lenght/2])
-		sphere(r=radius/3);
+		sphere(r=radius/3, $fn=segments);
 		translate([-radius+radius/3-wall,0,height-connection_lenght/2])
-		sphere(r=radius/3);
+		sphere(r=radius/3, $fn=segments);
 	}
 module lock_in(radius, inner_radius, height, wall, motor_bottom, connection_lenght){
 		translate([radius-radius/3+wall,0,height-connection_lenght/2])
-		sphere(r=radius/3-wall);
+		sphere(r=radius/3-wall, $fn=segments);
 		translate([-radius+radius/3-wall,0,height-connection_lenght/2])
-		sphere(r=radius/3-wall);
-		translate([0,0,height-(connection_lenght/2) ]);
-		cylinder(r=radius-2*wall, h=radius);
+		sphere(r=radius/3-wall, $fn=segments);
+//		translate([0,0,height-(connection_lenght/2) ]);
+//		cylinder(r=radius-2*wall, h=radius, $fn=segments);
 		translate([0,0,height-(connection_lenght/2)-(radius/3) ])
-		cylinder(r=radius-2*wall, h=(radius/3)*2);
+		cylinder(r=radius-2*wall-clear, h=(radius/3)*2, $fn=segments);
 }
 
 module engine_stage () {
