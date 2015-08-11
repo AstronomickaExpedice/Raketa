@@ -149,20 +149,40 @@ module concentric_cylinders(r, l, thickness, cylinders, spacing) {
     }
 }
 
-module pcb_mount(r, lenght, wall_thickness, pcb_thickness) {
-    union() {
-        translate([-r, -(wall_thickness * 2 + pcb_thickness) / 2, 0]) union() {
-            cube([wall_thickness * 2 + 4, wall_thickness * 2 + pcb_thickness, wall_thickness]);
-            cube([wall_thickness, pcb_thickness + wall_thickness * 2, lenght + wall_thickness]);
-            cube([wall_thickness * 2 + 4, wall_thickness, lenght + wall_thickness]);
-            translate([0, pcb_thickness + wall_thickness, 0]) cube([wall_thickness * 2 + 4, wall_thickness, lenght + wall_thickness]);
-    }
-    
-        translate([r, (wall_thickness * 2 + pcb_thickness) / 2, ]) rotate([0, 0, 180])  union() {
-            cube([wall_thickness * 2 + 4, wall_thickness * 2 + pcb_thickness, wall_thickness]);
-            cube([wall_thickness, pcb_thickness + wall_thickness * 2, lenght + wall_thickness]);
-            cube([wall_thickness * 2 + 4, wall_thickness, lenght + wall_thickness]);
-            translate([0, pcb_thickness + wall_thickness, 0]) cube([wall_thickness * 2 + 4, wall_thickness, lenght + wall_thickness]);
-        }
-    }
+module pcb_holder (pcb_height, pcb_width, pcb_depth, pcb_holder_overlap, wall_thickness, bottom_thickness, radius)
+{
+	translate([-radius,-wall_thickness - pcb_depth/2,0])
+	{
+		difference()
+		{
+			cube([radius*2, wall_thickness * 2 + pcb_depth, pcb_height + bottom_thickness]);
+			union()
+			{
+				translate([radius - pcb_width/2,wall_thickness,bottom_thickness]) cube([pcb_width, pcb_depth, pcb_height + 0.05]);
+				translate([radius - pcb_width/2 + pcb_holder_overlap,-0.05,-0.05]) cube([pcb_width - 2*pcb_holder_overlap,wall_thickness * 2 + pcb_depth+0.1,pcb_height + bottom_thickness+0.1]);
+				translate([radius,wall_thickness + pcb_depth/2,-0.05]) tube(radius - pcb_width/2, radius, pcb_height + bottom_thickness+0.1);
+			}
+		}
+	}
 }
+
+module triangle_3d(lenght, width, height)
+{
+	polyhedron(
+	points=[[0,0,0],[lenght,0,0],[lenght,width,0],[0,width,0],[0,0,height],[lenght,0,height]],
+	faces=[[0,1,2,3],[0,4,5,1],[5,4,3,2],[5,2,1],[3,4,0]]);
+}
+module pcb_holder_supports(pcb_height, pcb_width, pcb_depth, pcb_holder_overlap, wall_thickness, bottom_thickness, radius, support_height)
+{
+	translate([0,0,support_height]) pcb_holder(pcb_height, pcb_width, pcb_depth, pcb_holder_overlap, wall_thickness, bottom_thickness, radius);
+	difference()
+	{
+		union()
+		{
+			translate([radius,wall_thickness + pcb_depth/2,support_height]) rotate([180,0,270]) triangle_3d(wall_thickness * 2 + pcb_depth, radius - pcb_width/2 + pcb_holder_overlap, support_height);
+			mirror([1,0,0]) translate([radius,wall_thickness + pcb_depth/2,support_height]) rotate([180,0,270]) triangle_3d(wall_thickness * 2 + pcb_depth, radius - pcb_width/2 + pcb_holder_overlap, support_height);
+		}
+		tube(radius - pcb_width/2, radius, pcb_height + bottom_thickness+0.1);
+	}
+}
+
