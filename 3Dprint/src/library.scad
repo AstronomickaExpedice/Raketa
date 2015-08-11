@@ -143,6 +143,22 @@ difference () {
 }
 }
 
+
+/*
+THICKNESS = 1.1;
+RADIUS = 15;
+NOZZLE_THROAT_RADIUS = 6/2;
+NOZZLE_OUTCOME_RADIUS = 10/2;
+NOZZLE_LENGHT = 10;
+TOLERANCE = 0.5;
+$fn = 100;
+
+
+
+color([0, 0, 1]) nozzle_die(THICKNESS, RADIUS - TOLERANCE, NOZZLE_LENGHT, NOZZLE_THROAT_RADIUS, NOZZLE_OUTCOME_RADIUS);
+*/
+
+
 module concentric_cylinders(r, l, thickness, cylinders, spacing) {
     for(i = [0 : cylinders - 1]) {
         tube(thickness, i * (spacing + thickness) + r, l);
