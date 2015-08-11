@@ -186,3 +186,11 @@ module pcb_holder_supports(pcb_height, pcb_width, pcb_depth, pcb_holder_overlap,
 	}
 }
 
+module parachute_bowl (radius, bottom_thickness, wall_thickness, bowl_depth ,edge_width ,edge_height)
+{
+	cylinder(r=radius+wall_thickness, h=bottom_thickness);
+	translate([0,0,bottom_thickness]) 
+tube(wall_thickness, radius, bowl_depth - edge_height);
+	translate([0,0,bottom_thickness+bowl_depth-edge_height]) tube(edge_width+wall_thickness,radius, edge_height);
+}
+
