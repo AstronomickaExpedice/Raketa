@@ -1,8 +1,6 @@
-//////////
-//
-//      Rocket nose cone
-//
-/////////
+include <global_parameters.scad>
+use <library.scad>
+
 
 module ogive_nose () {
     translate([0, 0, cone_connection_height ])   // move cone to the top of the rocket.
