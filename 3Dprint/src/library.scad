@@ -117,7 +117,7 @@ module screw_anchor(outer_r, inner_r, depth, height, wall) {
 
 module tube(wall_thickness, radius, lenght) {
     difference() {
-        cylinder(r = radius + wall_thickness, h = lenght);
+        cylinder(r = radius + wall_thickness * 2, h = lenght);
         translate([0, 0, -0.05]) cylinder(r = radius, h = lenght + 0.1);
     }
 }
@@ -210,3 +210,23 @@ tube(wall_thickness, radius, bowl_depth - edge_height);
 	translate([0,0,bottom_thickness+bowl_depth-edge_height]) tube(edge_width+wall_thickness,radius, edge_height);
 }
 
+module kinderjoint_m(r, h, ball_r, ball_th) {
+    cylinder(r = r, h = h);    
+    translate([r - ball_r + ball_th , 0, h / 2 ]) sphere(r = ball_r);
+    rotate([0, 0, 120]) translate([r - ball_r + ball_th , 0, h / 2 ]) sphere(r = ball_r);
+    rotate([0, 0, -120]) translate([r - ball_r + ball_th , 0, h / 2 ]) sphere(r = ball_r);
+}
+
+module kinderjoint_m_hollow(r, h, ball_r, ball_th, wall_th) {
+    difference() {
+        kinderjoint_m(r + wall_th * 2, h, ball_r, ball_th);
+        translate([0, 0, -0.05]) cylinder(r = r, h = h + 0.1);
+    }
+}
+
+module kinderjoint_f(r, h, ball_r, ball_th, wall_th) {
+    difference() {
+        kinderjoint_m(r + wall_th * 2, h, ball_r + wall_th, ball_th + wall_th);
+        translate([0, 0, -0.05]) kinderjoint_m(r, h + 0.1, ball_r, ball_th);
+    }
+}
