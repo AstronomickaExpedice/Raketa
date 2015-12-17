@@ -1,7 +1,7 @@
 /* [Global] */
 
 // Which part(s) would you like to see?
-part = "all"; // [all:Complete Rocket, cone:Nose Cone, body:Body, finCan:Fin Can, payloadBody:Payload Body, payloadCoupling:Payload Coupling]
+part = "cone"; // [all:Complete Rocket, cone:Nose Cone, body:Body, finCan:Fin Can, payloadBody:Payload Body, payloadCoupling:Payload Coupling]
 
 // Show a cut-away section?  (warning: this can be really slow to render)
 section_view = "no";  // [yes:Yes, no:No]
@@ -553,7 +553,7 @@ module body() {
 			body_guide == "yes"
 		) {
 			if (guide_type == "rod") {
-				translate([guide_tube_offset+1.1,
+				translate([guide_tube_offset,
 						   guide_rod_diameter/2,
 		   				   0])
 				guideTube();
