@@ -1,4 +1,4 @@
-THICKNESS = 1.1;
+THICKNESS = 4;
 RADIUS = 15;
 LENGHT = 120;
 NOZZLE_THROAT_RADIUS = 2;
@@ -8,6 +8,9 @@ TOLERANCE = 0.5;
 $fn = 100;
 
 use <library.scad>
+use <polyScrewThread.scad>
+
+
 
 module nozzle_holle(wall, radius, nozzle_in, nozzle_out){
 	difference(){
@@ -22,5 +25,20 @@ module nozzle_holle(wall, radius, nozzle_in, nozzle_out){
 		}
 	}
 }
+
+module nozzle_cap_thread(radius, wall){
+	translate([0, 0, 0]) hex_screw(29.5,4,55,15,1.5,2,24,0,0,0);
+	translate([0, 0, -wall]) cylinder(d2 = (radius+wall)*2 ,d1 = (radius+wall)*2*3, h=wall);
+}
+
+/*
 nozzle_holle(THICKNESS, RADIUS, 15/2, 20/2);
 translate([0, 0, 0]) tube(THICKNESS, RADIUS, LENGHT);
+difference(){
+	translate([0, 0, LENGHT-20]) cylinder(d = RADIUS*2+THICKNESS, h=20);
+	translate([0, 0, LENGHT-20]) hex_screw(30,4,55,30,1.5,2,24,0,0,0);
+}*/
+
+nozzle_cap_thread(RADIUS, THICKNESS);
+
+

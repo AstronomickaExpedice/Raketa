@@ -117,7 +117,7 @@ module screw_anchor(outer_r, inner_r, depth, height, wall) {
 
 module tube(wall_thickness, radius, lenght) {
     difference() {
-        cylinder(r = radius + wall_thickness, h = lenght);
+        cylinder(r = radius + wall_thickness * 2, h = lenght);
         translate([0, 0, -0.05]) cylinder(r = radius, h = lenght + 0.1);
     }
 }
@@ -143,26 +143,90 @@ difference () {
 }
 }
 
+
+/*
+THICKNESS = 1.1;
+RADIUS = 15;
+NOZZLE_THROAT_RADIUS = 6/2;
+NOZZLE_OUTCOME_RADIUS = 10/2;
+NOZZLE_LENGHT = 10;
+TOLERANCE = 0.5;
+$fn = 100;
+
+
+
+color([0, 0, 1]) nozzle_die(THICKNESS, RADIUS - TOLERANCE, NOZZLE_LENGHT, NOZZLE_THROAT_RADIUS, NOZZLE_OUTCOME_RADIUS);
+*/
+
+
 module concentric_cylinders(r, l, thickness, cylinders, spacing) {
     for(i = [0 : cylinders - 1]) {
         tube(thickness, i * (spacing + thickness) + r, l);
     }
 }
 
-module pcb_mount(r, lenght, wall_thickness, pcb_thickness) {
-    union() {
-        translate([-r, -(wall_thickness * 2 + pcb_thickness) / 2, 0]) union() {
-            cube([wall_thickness * 2 + 4, wall_thickness * 2 + pcb_thickness, wall_thickness]);
-            cube([wall_thickness, pcb_thickness + wall_thickness * 2, lenght + wall_thickness]);
-            cube([wall_thickness * 2 + 4, wall_thickness, lenght + wall_thickness]);
-            translate([0, pcb_thickness + wall_thickness, 0]) cube([wall_thickness * 2 + 4, wall_thickness, lenght + wall_thickness]);
+module pcb_holder (pcb_height, pcb_width, pcb_depth, pcb_holder_overlap, wall_thickness, bottom_thickness, radius)
+{
+	translate([-radius,-wall_thickness - pcb_depth/2,0])
+	{
+		difference()
+		{
+			cube([radius*2, wall_thickness * 2 + pcb_depth, pcb_height + bottom_thickness]);
+			union()
+			{
+				translate([radius - pcb_width/2,wall_thickness,bottom_thickness]) cube([pcb_width, pcb_depth, pcb_height + 0.05]);
+				translate([radius - pcb_width/2 + pcb_holder_overlap,-0.05,-0.05]) cube([pcb_width - 2*pcb_holder_overlap,wall_thickness * 2 + pcb_depth+0.1,pcb_height + bottom_thickness+0.1]);
+				translate([radius,wall_thickness + pcb_depth/2,-0.05]) tube(radius - pcb_width/2, radius, pcb_height + bottom_thickness+0.1);
+			}
+		}
+	}
+}
+
+module triangle_3d(lenght, width, height)
+{
+	polyhedron(
+	points=[[0,0,0],[lenght,0,0],[lenght,width,0],[0,width,0],[0,0,height],[lenght,0,height]],
+	faces=[[0,1,2,3],[0,4,5,1],[5,4,3,2],[5,2,1],[3,4,0]]);
+}
+module pcb_holder_supports(pcb_height, pcb_width, pcb_depth, pcb_holder_overlap, wall_thickness, bottom_thickness, radius, support_height)
+{
+	translate([0,0,support_height]) pcb_holder(pcb_height, pcb_width, pcb_depth, pcb_holder_overlap, wall_thickness, bottom_thickness, radius);
+	difference()
+	{
+		union()
+		{
+			translate([radius,wall_thickness + pcb_depth/2,support_height]) rotate([180,0,270]) triangle_3d(wall_thickness * 2 + pcb_depth, radius - pcb_width/2 + pcb_holder_overlap, support_height);
+			mirror([1,0,0]) translate([radius,wall_thickness + pcb_depth/2,support_height]) rotate([180,0,270]) triangle_3d(wall_thickness * 2 + pcb_depth, radius - pcb_width/2 + pcb_holder_overlap, support_height);
+		}
+		tube(radius - pcb_width/2, radius, pcb_height + bottom_thickness+0.1);
+	}
+}
+
+module parachute_bowl (radius, bottom_thickness, wall_thickness, bowl_depth ,edge_width ,edge_height)
+{
+	cylinder(r=radius+wall_thickness, h=bottom_thickness);
+	translate([0,0,bottom_thickness]) 
+tube(wall_thickness, radius, bowl_depth - edge_height);
+	translate([0,0,bottom_thickness+bowl_depth-edge_height]) tube(edge_width+wall_thickness,radius, edge_height);
+}
+
+module kinderjoint_m(r, h, ball_r, ball_th) {
+    cylinder(r = r, h = h);    
+    translate([r - ball_r + ball_th , 0, h / 2 ]) sphere(r = ball_r);
+    rotate([0, 0, 120]) translate([r - ball_r + ball_th , 0, h / 2 ]) sphere(r = ball_r);
+    rotate([0, 0, -120]) translate([r - ball_r + ball_th , 0, h / 2 ]) sphere(r = ball_r);
+}
+
+module kinderjoint_m_hollow(r, h, ball_r, ball_th, wall_th) {
+    difference() {
+        kinderjoint_m(r + wall_th * 2, h, ball_r, ball_th);
+        translate([0, 0, -0.05]) cylinder(r = r, h = h + 0.1);
     }
-    
-        translate([r, (wall_thickness * 2 + pcb_thickness) / 2, ]) rotate([0, 0, 180])  union() {
-            cube([wall_thickness * 2 + 4, wall_thickness * 2 + pcb_thickness, wall_thickness]);
-            cube([wall_thickness, pcb_thickness + wall_thickness * 2, lenght + wall_thickness]);
-            cube([wall_thickness * 2 + 4, wall_thickness, lenght + wall_thickness]);
-            translate([0, pcb_thickness + wall_thickness, 0]) cube([wall_thickness * 2 + 4, wall_thickness, lenght + wall_thickness]);
-        }
+}
+
+module kinderjoint_f(r, h, ball_r, ball_th, wall_th) {
+    difference() {
+        kinderjoint_m(r + wall_th * 2, h, ball_r + wall_th, ball_th + wall_th);
+        translate([0, 0, -0.05]) kinderjoint_m(r, h + 0.1, ball_r, ball_th);
     }
 }
