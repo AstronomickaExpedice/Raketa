@@ -3,7 +3,7 @@ function sq(x) = x * x;
 
 module ogive_nose_cone(radius, height, slices = 10, thickness = -1) {   //create ogive nose cone with rounded top tip
     
-    rounding_level = height -  thickness/2;
+    rounding_level = height -  4*thickness;
 
     ogive_radius = (height * height + radius * radius) / (2 * radius);
     
@@ -11,7 +11,7 @@ module ogive_nose_cone(radius, height, slices = 10, thickness = -1) {   //create
     center_y = 0;
     
     d = height / slices;
-    rounding_sphere_radius = thickness/3;
+    rounding_sphere_radius = thickness*3;
     rounding_radius = w(rounding_level, ogive_radius); // radius of cone at rounding level
 
     rounding_sphere_height = rounding_sphere_radius - sqrt(sq(rounding_sphere_radius) - sq(rounding_radius));
