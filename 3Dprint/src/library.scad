@@ -117,7 +117,7 @@ module screw_anchor(outer_r, inner_r, depth, height, wall) {
 
 module tube(wall_thickness, radius, lenght) {
     difference() {
-        cylinder(r = radius + wall_thickness * 2, h = lenght);
+        cylinder(r = radius + wall_thickness, h = lenght);
         translate([0, 0, -0.05]) cylinder(r = radius, h = lenght + 0.1);
     }
 }
@@ -202,13 +202,14 @@ module pcb_holder_supports(pcb_height, pcb_width, pcb_depth, pcb_holder_overlap,
 	}
 }
 
-module parachute_bowl (radius, bottom_thickness, wall_thickness, bowl_depth ,edge_width ,edge_height)
+module parachute_bowl (r_bowl, depth, r_stage, wall_th)
 {
-	cylinder(r=radius+wall_thickness, h=bottom_thickness);
-	translate([0,0,bottom_thickness]) 
-tube(wall_thickness, radius, bowl_depth - edge_height);
-	translate([0,0,bottom_thickness+bowl_depth-edge_height]) tube(edge_width+wall_thickness,radius, edge_height);
+	cylinder(r = r_bowl + wall_th, h = wall_th);
+	translate([0, 0, wall_th]) tube(wall_th, r_bowl, depth);
+	translate([0, 0, wall_th + depth]) tube(r_stage - r_bowl, r_bowl, wall_th);
 }
+
+fn=50;
 
 module kinderjoint_m(r, h, ball_r, ball_th) {
     cylinder(r = r, h = h);    
@@ -219,14 +220,14 @@ module kinderjoint_m(r, h, ball_r, ball_th) {
 
 module kinderjoint_m_hollow(r, h, ball_r, ball_th, wall_th) {
     difference() {
-        kinderjoint_m(r + wall_th * 2, h, ball_r, ball_th);
-        translate([0, 0, -0.05]) cylinder(r = r, h = h + 0.1);
+        kinderjoint_m(r + wall_th, h, ball_r, ball_th);
+        translate([0, 0, -100]) cylinder(r = r, h = h + 200);
     }
 }
 
 module kinderjoint_f(r, h, ball_r, ball_th, wall_th) {
     difference() {
-        kinderjoint_m(r + wall_th * 2, h, ball_r + wall_th, ball_th + wall_th);
-        translate([0, 0, -0.05]) kinderjoint_m(r, h + 0.1, ball_r, ball_th);
+        kinderjoint_m(r + wall_th, h, ball_r + wall_th, ball_th + wall_th);
+        translate([0, 0, -100]) kinderjoint_m(r, h + 200, ball_r, ball_th);
     }
 }
