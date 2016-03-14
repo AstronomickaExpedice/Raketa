@@ -1,7 +1,6 @@
 include <global_parameters.scad>
 use <library.scad>
 
-
 module ogive_nose () {
     translate([0, 0, cone_connection_height ])   // move cone to the top of the rocket.
     ogive_nose_cone(radius, cone_height, resolution, wall);
@@ -11,3 +10,5 @@ module ogive_nose () {
         cylinder(r = radius - wall, h = cone_connection_height, $fn=resolution);
     }    
 }
+
+ogive_nose();

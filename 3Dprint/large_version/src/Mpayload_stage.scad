@@ -1,5 +1,6 @@
 use <library.scad>
 include <global_parameters.scad>
+//Middle payload stage.
 
 inner_radius = radius - 5;
 height = 185;

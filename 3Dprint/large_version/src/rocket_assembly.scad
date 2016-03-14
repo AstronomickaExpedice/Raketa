@@ -3,6 +3,8 @@ include <global_parameters.scad>
 use <engine_stage.scad>
 use <payload_stage.scad>
 use <recovery_stage.scad>
+use <rocket_nose.scad>
+
 
 separation = 50;
 
