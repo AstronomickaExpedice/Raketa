@@ -1,4 +1,4 @@
-/*radius = 50 / 2;
+radius = 50 / 2;
 clear = 0.175;
 
 wall = 0.75;
@@ -10,7 +10,6 @@ connection_lenght = radius*2;
 resolution = 150;
 
 stage_height = 185;
-*/
 
 RADIUS = 25;
 CLEARENCE = 0.75;

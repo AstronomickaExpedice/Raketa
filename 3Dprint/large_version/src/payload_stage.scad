@@ -100,3 +100,5 @@ translate([0, 0, 0])
 cylinder(r = radius, h = height , $fn=resolution);
 */
 
+payload_stage();
+//launch_holder(radius, 5, 35, wall, 30);
