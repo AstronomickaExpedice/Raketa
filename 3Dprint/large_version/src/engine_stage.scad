@@ -5,13 +5,13 @@ inner_radius = 32 / 2;
 height = stage_height;
 motor_top = 173;
 motor_bottom = 10;
+fin_num = 9;
 
 // classic fins
 fin_r = radius + 50;
 fin_h = 25;
 fin_angle = 16;
 
-$fn = 150;
 
 module motor_holder(wall) {
 	translate([0, 0, -wall * 3])
@@ -43,12 +43,15 @@ module fins(outer_r, inner_r, wall, height, count, angle) {
         }
     }
     inner_points = [ for (i = [0 : count - 1]) [sin(i * 360/count) * (outer_r) , cos(i * 360/count) * (outer_r)]];
-    outer_points = [ for (i = [0 : count - 1]) [sin(i * 360/count) * (outer_r + wall) , cos(i * 360/count) * (outer_r+wall)]];
+    // calculate coordinates of external fins polygon
+    vertex_angle = (180*(count-2)) / count;   // angle in external fins polygon corner.
+    outer_points = [ for (i = [0 : count - 1]) [sin(i * 360/count) * (outer_r + wall/sin(vertex_angle/2)) , cos(i * 360/count) * (outer_r + wall/sin(vertex_angle/2))]];
     polygon_paths = [ [ for (i = [0 : count-1]) i ], [ for (i = [count : 2*count-1]) i ]];
 
     echo("outer points = ", outer_points);
     echo("inner points = ", inner_points);
     echo("paths = ", polygon_paths);
+    echo("vertex_angle = ", vertex_angle);
     
     linear_extrude(height = height - (tan(angle)*(outer_r - inner_r)))
         polygon(
@@ -97,10 +100,10 @@ module hull(radius, inner_radius, height, wall, motor_bottom, connection_lenght)
                 cylinder(r = radius - 2*wall - clear, h = connection_lenght);
         }
 
-        translate([0, 0, height - connection_lenght - 2*wall])        
+        translate([0, 0, height - connection_lenght - 3*wall])        // bevel between connection and hull
         difference () {                
-            cylinder(r=radius, h=2*wall);
-            cylinder(r1=radius - wall, r2=radius - 2*wall, h=2*wall);
+            cylinder(r=radius, h=3*wall);
+            cylinder(r1=radius - wall, r2=radius - 2*wall - clear, h=3*wall);
         }        
 }
 
@@ -141,8 +144,7 @@ module engine_stage () {
 		}
     }
 
-    fins(fin_r, radius - wall, wall , fin_h, 9, fin_angle);
+    fins(fin_r, radius - wall, wall , fin_h, fin_num, fin_angle);
 }
-
 
 engine_stage();

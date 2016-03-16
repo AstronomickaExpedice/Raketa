@@ -1,7 +1,9 @@
-radius = 50 / 2;
-clear = 0.175;
+$fn = 150;
 
-wall = 0.6;
+radius = 50 / 2;
+clear = 0.5;
+
+wall = 0.61;
 rib_wall = 0.6;
 rib_count = 18;
 
