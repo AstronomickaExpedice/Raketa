@@ -14,7 +14,7 @@ $fn = 150;
 
 
 
-module lock_out(radius, inner_radius, height, wall, motor_bottom, connection_lenght){
+module lock_out(radius, inner_radius, height, wall, connection_lenght){
 		translate([-radius+radius/3-wall,0,height-connection_lenght/2])
 		sphere(r=radius/3);
 		rotate([0,0,-360/3])
@@ -25,7 +25,7 @@ module lock_out(radius, inner_radius, height, wall, motor_bottom, connection_len
 		sphere(r=radius/3);
 }
 
-module lock_in(radius, inner_radius, height, wall, motor_bottom, connection_lenght){
+module lock_in(radius, inner_radius, height, wall, connection_lenght){
 		translate([-radius+radius/3-wall,0,height-connection_lenght/2])
 		sphere(r=radius/3-wall);
 		rotate([0,0,-360/3])
@@ -38,7 +38,7 @@ module lock_in(radius, inner_radius, height, wall, motor_bottom, connection_leng
 		cylinder(r=radius-2*wall-clear, h=(radius/3)*2);
 }
 
-module lock_holl_out(radius, inner_radius, height, wall, motor_bottom, connection_lenght){
+module lock_holl_out(radius, inner_radius, height, wall,  connection_lenght){
 		translate([-radius+radius/3-wall,0,connection_lenght/2])
 		sphere(r=radius/3+wall);
 		rotate([0,0,-360/3])
@@ -49,7 +49,7 @@ module lock_holl_out(radius, inner_radius, height, wall, motor_bottom, connectio
 		sphere(r=radius/3+wall);
 }
 
-module lock_holl_in(radius, inner_radius, height, wall, motor_bottom, connection_lenght){
+module lock_holl_in(radius, inner_radius, height, wall,  connection_lenght){
 		translate([-radius+radius/3-wall,0,connection_lenght/2])
 		sphere(r=radius/3);
 		rotate([0,0,-360/3])
@@ -136,12 +136,12 @@ module payload_stage () {
 						h = 2*wall
 				);
 			}
-			lock_out(radius, inner_radius, height, wall, motor_bottom, connection_lenght);
-			lock_holl_out(radius, inner_radius, height, wall, motor_bottom, connection_lenght);
+			lock_out(radius, inner_radius, height, wall, connection_lenght);
+			lock_holl_out(radius, inner_radius, height, wall, connection_lenght);
 		}
 		union(){
-			lock_in(radius, inner_radius, height, wall, motor_bottom, connection_lenght);
-			lock_holl_in(radius, inner_radius, height, wall, motor_bottom, connection_lenght);
+			lock_in(radius, inner_radius, height, wall, connection_lenght);
+			lock_holl_in(radius, inner_radius, height, wall,  connection_lenght);
 		}
 	}
 

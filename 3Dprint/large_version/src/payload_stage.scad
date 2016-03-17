@@ -96,5 +96,9 @@ module payload_stage () {
     }
 }
 
+
+difference (){
 payload_stage();
 //launch_holder(radius, 5, 35, wall, 30);
+cube(200)
+}
