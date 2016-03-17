@@ -7,13 +7,6 @@ height = 185;
 
 $fn = 150;
 
-
-
-
-
-
-
-
 module lock_out(radius, inner_radius, height, wall, connection_lenght){
 		translate([-radius+radius/3-wall,0,height-connection_lenght/2])
 		sphere(r=radius/3);
@@ -58,24 +51,10 @@ module lock_holl_in(radius, inner_radius, height, wall,  connection_lenght){
 		rotate([0,0,360/3])
 		translate([-radius+radius/3-wall,0,connection_lenght/2])
 		sphere(r=radius/3);
-	/*
-		translate([-radius+radius/3-wall,0,height-connection_lenght/2])
-		sphere(r=radius/3-wall);
-		rotate([0,0,-360/3])
-		translate([-radius+radius/3-wall,0,height-connection_lenght/2])
-		sphere(r=radius/3-wall);
-		rotate([0,0,360/3])
-		translate([0,0,height-(connection_lenght/2) ]);
-		cylinder(r=radius-2*wall, h=radius);
-		*/
+
 		translate([0,0,(connection_lenght/2)-(radius/2)-clear ])
 		cylinder(r=radius-wall-clear, h=(radius/2)*2+2*clear);
 }
-
-
-
-
-
 
 
 module payload_stage () {
@@ -123,17 +102,17 @@ module payload_stage () {
 		
 			// bevel/smooth transformation between connection and rest of the rocket hull 
 		
-			translate([0, 0, height - connection_lenght - 2*rib_wall])        
+			translate([0, 0, height - connection_lenght - 3*wall])        
 			difference () {                
 				cylinder(               
 						r = radius,
-						h = 2*wall
+						h = 3*wall
 				);
 		
 				cylinder(               // bevel/smooth transformation between connection and rest of the rocket hull 
 						r1 = radius - wall,
-						r2 = radius - 2*wall ,
-						h = 2*wall
+						r2 = radius - 2*wall  - clear,
+						h = 3*wall
 				);
 			}
 			lock_out(radius, inner_radius, height, wall, connection_lenght);
@@ -149,11 +128,4 @@ module payload_stage () {
     //launch_holder(radius, 5, 35, wall, 30);
 }
 
-/*
-// object modifier
-translate([0, 0, 0])
-cylinder(r = radius, h = height , $fn=resolution);
-*/
-
 payload_stage();
-
