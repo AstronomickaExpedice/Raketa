@@ -67,13 +67,23 @@ For appropriate range of rocket vehicles the state of the art but inexpensive FD
 
 \section{Design evolution}
 
-We decided to use the FDM additive manufacturing technology as best candidate for small and medium size of sounding rocket vehicle. The main reason for that decision is fact that this type of 3D printing technology is widely acessible and has quality enough to build rocket body which could windstad the mechanical and aero dynamical stress during the rocket lunch. The second reason is fact that this type of technology is relatively  cheap in comparison of other additive manufacturing methods. 
-But there also exist technological limits because not all shapes could be 3Dprinted
-
-The design of rocket vehicle must respect a FDM te
-
+We decided to use the Fused deposition modeling (FDM) additive manufacturing technology as best candidate for small and medium size of sounding rocket vehicle. The main reason for that decision is fact that this type of 3D printing technology is widely acessible and has quality enough to build rocket body which could windstad the mechanical and aero-dynamical stress during the rocket lunch. The second reason is fact that this type of technology is relatively  cheap in comparison of other additive manufacturing methods. 
+But there also exist technological limits because not all shapes could be 3Dprinted. The problematic geometry are overhanging surfaces or large number of very small details in printed volume. 
+The design of rocket vehicle therefore must have special construction which allows reliable printing without costly model specific g-code tweaking. 
 
 \subsection{Rocket body and recovery system}
+
+The rocket body is designed as simple as possible to minimize quality parameters requested on 3D printer used. Several mechanical construction challenging details have been resolved until a current stage of rocket development. 
+
+\begin{itemize}
+\item Fins design
+\item Rocket stage connections
+\item Rotket hull reinforcements
+\item Reliable recovery system
+\end{itemize}
+
+
+
 The header at the top of the page is of a special form for even pages and for odd ones. Therefore, the content of the header for the even pages consists of the abbreviated names of the authors and the paper title and is defined by the command \verb+\headtitle{}+. The headers of the all pages are then generated automatically.
 
 %----------------------------------------------------------
@@ -144,6 +154,18 @@ where $\lambda_g$ is the wavelength\dots etc.
 %
 
 \subsection{3D printable rocket engine}
+
+Several technical solutions were considered and tested during the rocket development. 
+
+\begin{itemize}
+\item Reusable metal case engine
+\item One time use model rocket engine
+\item Experiment with one time use 3D printed engine
+\end{itemize}
+
+A reusable metal engine shown in figure X was used in very first rocket design. (Which was not 3D printed really.) Testing rocket with reusable engine was lunched, but recovery was unsuccessful. The recovery system failed and rocket must be excavated from soil in the test field. Consequently the reusable rocket engine was mechanically deformed and cannot be used any more.
+The reusable rocket engine was quite expensive and recovery system failure or some other system failure could not be prevented completely in future. Therefore use of reusable rocket engine was evaluated as unsuitable for experimental rocket design. 
+The one time model rocket engine was used in another small but this time 3D printed design. The rocket lunch was partiality successful because the 3D printed rocket withstand the stress forces during the launch.  But parachute recovery system failed again. 
 
 
 \section{Conclusion}
