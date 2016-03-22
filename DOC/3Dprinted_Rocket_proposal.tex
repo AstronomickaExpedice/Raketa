@@ -45,8 +45,8 @@
 %               THIS IS THE PLACE FOR ABSTRACT
 
 \begin{abstract}
+The rocket sounding is known atmospheric research tool. 
 \end{abstract}
-
 
 %----------------------------------------------------------
 %               THIS IS THE PLACE FOR KEYWORDS
@@ -67,9 +67,18 @@ For appropriate range of rocket vehicles the state of the art but inexpensive FD
 
 \section{Design evolution}
 
-We decided to use the Fused deposition modeling (FDM) additive manufacturing technology as best candidate for small and medium size of sounding rocket vehicle. The main reason for that decision is fact that this type of 3D printing technology is widely acessible and has quality enough to build rocket body which could windstad the mechanical and aero-dynamical stress during the rocket lunch. The second reason is fact that this type of technology is relatively  cheap in comparison of other additive manufacturing methods. 
+We decided to use the Fused deposition modeling (FDM) additive manufacturing technology as best candidate for small and medium size of sounding rocket vehicle. The main reason for that decision is fact that this type of 3D printing technology is widely accessible and has quality enough to build rocket body which could windstad the mechanical and aero-dynamical stress during the rocket lunch. The second reason is fact that this type of technology is relatively  cheap in comparison of other additive manufacturing methods. 
 But there also exist technological limits because not all shapes could be 3Dprinted. The problematic geometry are overhanging surfaces or large number of very small details in printed volume. 
 The design of rocket vehicle therefore must have special construction which allows reliable printing without costly model specific g-code tweaking. 
+
+\begin{figure}[ht]
+\begin{center}
+\resizebox{\linewidth}{!}{\includegraphics{./img/3dprinted_rocket_parts.jpg}}
+\caption{A sample of printable rocket design. (Experimentally printed from red ABS)} 
+\label{fig:printed_parts}
+\end{center}
+\end{figure}
+
 
 \subsection{Rocket body and recovery system}
 
@@ -82,76 +91,21 @@ The rocket body is designed as simple as possible to minimize quality parameters
 \item Reliable recovery system
 \end{itemize}
 
+The rocket fins are aero-dynamical stabilization surfaces needed for smooth stable ballistic trajectory flight.  The classical planar fins are very well known, but this type of fins in not suitable for printed model.  The long wingspan and elastic properties of PLA material tends to vibrate in high speed airflows.
+Therefore alternative fins construction was considered a grid-fins design \cite{grid_fins} where the elasticity of material is very suppressed by orthogonal bonding.
+Grid fins design suppose very thin wall of grid material towards to grid cross-section. This assumption significantly limits range of printable rocket sizes. The limits arise from the fact that most 3D printers have 0.4 mm nozzle diameter. Therefore extrusion width of that printer cannot be less than approximately 0.5 mm. Such grid-fin wall size cannot be used in rocket with fins wingspan smaller than approximately 7 cm. because the aero-dynamical drag of such grid fins is considerable. 
 
-
-The header at the top of the page is of a special form for even pages and for odd ones. Therefore, the content of the header for the even pages consists of the abbreviated names of the authors and the paper title and is defined by the command \verb+\headtitle{}+. The headers of the all pages are then generated automatically.
-
-%----------------------------------------------------------
-%               HERE IS EXAMPLE OF A TABLE
-%		environment {table} for one-column table, {table*} for two-column table
-%
-\begin{table}[h]
+\begin{figure}[ht]
 \begin{center}
-{\renewcommand{\arraystretch}{1.4}
-\tabcolsep=.8cm
-\tablefont
-\begin{tabular}{|c|c|c|}
-\hline
-10
-&20
-&30\\
-\hline
-40
-&50
-&60\\
-\hline
-\end{tabular}}
-\caption{Descriptions of figures and tables are of the same style.}
-\label{tab}
+\resizebox{\linewidth}{!}{\includegraphics{./img/3d_printed_grid_fin.jpg}}
+\caption{A reduced size model of grid fin based engine stage of rocket. } 
+\label{fig:printed_parts}
 \end{center}
-\end{table}
-Tables are centered in the text column. For the text in the table, we use the font command \verb+\tablefont+. Use standard environments \verb+table+ and \verb+tabular+, see the example above (Tab.~\ref{tab}). For the two-column table use the environment \verb+table*+. 
+\end{figure}
 
-Figures are also centered in the text column. Use standard environment \verb+figure+, see the example above. For the two-column figure use the environment \verb+figure*+. 
 
-Descriptions of figures or tables are of the style \verb+\caption{}+. Short captions, which take one line only, should be centered. For the two-column caption use the command \verb+\captionwide{}+.
+The drag must be reduced to achieve usable ceiling parameters. To overcome this issue a hybrid grid-fins were developed as compromise between rigidity of grid-fins and aerodynamic efficiency of classic planar fins. 
 
-Equations in the paper should be typed using the common math  environments (e.g. \verb+\equation+). Equations are numbered automatically as shown in the following example:
-\begin{equation}
-\frac{2\mathrm{B} \sin^2 + A \sin2}{10 g^2 \kappa T + A \cos^2 + B \sin}= 2 \gamma\delta .
-\end{equation}
-No comma should be put before an explanation of symbols in the equation, e. g. 
-\begin{equation}
-       \lambda_g =\frac{1}{\sqrt{1-\left(\frac{\lambda}{\lambda_m}\right)^2}}
-\end{equation}	
-where $\lambda_g$ is the wavelength\dots etc.
-
-%----------------------------------------------------------
-%               HERE IS EXAMPLE OF A FIGURE	
-%		environment {figure} for one-column figure, {figure*} for two-column figure 
-%	 	\caption{} for one-column caption, \captionwide{} for two-column figure
-%
-\begin{figure}[ht!]
-\begin{center}
-\resizebox{65mm}{!}{\includegraphics{./img/obr1.eps}}
-%\input{obr/dr1a.pstex_t}
-\caption{The description of a figure is of the same style as the description of a table; the figure itself is of the environment \texttt{figure}.
-} 
-\label{fig1}
-\end{center}
-\end{figure}%\vspace{5mm}
-%
-%		example of twocolumn figure - pay attention to figure numbering, may be wrong.
-%
-%\begin{figure*}[ht!]
-%\begin{center}
-%\resizebox{65mm}{!}{\includegraphics{obr1.eps}}
-%\captionwide{The example of two-column figure and caption.
-%} 
-%\label{figwide}
-%\end{center}
-%\end{figure*}
-%
 
 \subsection{3D printable rocket engine}
 
@@ -163,27 +117,25 @@ Several technical solutions were considered and tested during the rocket develop
 \item Experiment with one time use 3D printed engine
 \end{itemize}
 
-A reusable metal engine shown in figure X was used in very first rocket design. (Which was not 3D printed really.) Testing rocket with reusable engine was lunched, but recovery was unsuccessful. The recovery system failed and rocket must be excavated from soil in the test field. Consequently the reusable rocket engine was mechanically deformed and cannot be used any more.
+A reusable metal engine shown in figure \ref{fig:metal_engine} was used in very first rocket design. (Which was not 3D printed really.) Testing rocket with reusable engine was lunched, but recovery was unsuccessful. The recovery system failed and rocket must be excavated from soil in the test field. Consequently the reusable rocket engine was mechanically deformed and cannot be used any more.
 The reusable rocket engine was quite expensive and recovery system failure or some other system failure could not be prevented completely in future. Therefore use of reusable rocket engine was evaluated as unsuitable for experimental rocket design. 
 The one time model rocket engine was used in another small but this time 3D printed design. The rocket lunch was partiality successful because the 3D printed rocket withstand the stress forces during the launch.  But parachute recovery system failed again. 
 
+\begin{figure}[ht]
+\begin{center}
+\resizebox{\linewidth}{!}{\includegraphics{./img/rocket_engine1.jpg}}
+\caption{A sample of printable rocket design. (Experimentally printed from red ABS)} 
+\label{fig:metal_engine}
+\end{center}
+\end{figure}
 
 \section{Conclusion}
-Finally, we would like to ask authors for keeping the following rules:
-\begin{itemize}
-\item All authors must have a student status! The supervisor can be mentioned only in the \emph{Acknowledgements} section. \textbf{Failure to comply with this rule may lead to rejection of the paper}.
 
-\item Authors are requested to submit their papers electronically to the conference web site, \textbf{which is the moment when you register for the conference}. Please, do NOT send the papers by e-mail. 
 
-\item The file size in the pdf format (all fonts embedded) is limited to maximum 3.5 MB. Always use the up-to-date version. \textbf{Make sure that all fonts are embedded}. 
 
-\item The length of the paper should depend on its contents (balance between the text and figures). The Program Committee will assess the completeness of the information presented. The text body of the paper itself might not exceed 5 pages. 
 
-\item Authors are invited to include their short professional curriculum and an ID-sized photo at the end of their papers.
-\end{itemize}
 
-%----------------------------------------------------------
-%               THIS IS THE PLACE FOR  ACKNOWLEDGEMENTS
+
 \section*{Acknowledgements}
 Research described in the paper was supervised by Prof. A. Supervisor, FEE CTU in Prague and supported by the Czech Grant Agency under grant No. 102/ 01/9999, by the Czech Ministry of Education under grant No. 9999/2002 and by the research program MSM 444222.
 
@@ -198,8 +150,8 @@ The authors are asked to pay special attention to the form of references. The NA
 JAKUBOV\'A, I., RAIDA, Z. Exemplary Document for the paper in Radioengineering. \emph{Radioengineering}, 2006, vol. 15, no. 1, p. 1 - 2.
 \bibitem{book}
 AUTHOR, F., AUTHOR, S., AUTHOR, T. F. \emph{The Book}. 2nd ed. Humpolec: Nupish\&Publish, 1901.
-\bibitem{article}
-HUSN\'IK, L., LHOTSK\'A, L. About Poster 2005. In \emph{Proceedings of the 9th International Student Conference on Electrical Engineering POSTER 2005}. Prague (Czech Republic), 2005, p. 1 - 2.
+\bibitem{Grid_fin}
+https://en.wikipedia.org/wiki/Grid\_fin
 \end{thebibliography}
 
 
