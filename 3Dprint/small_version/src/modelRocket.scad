@@ -1,7 +1,7 @@
 /* [Global] */
 
 // Which part(s) would you like to see?
-part = "all"; // [all:Complete Rocket, cone:Nose Cone, body:Body, finCan:Fin Can, payloadBody:Payload Body, payloadCoupling:Payload Coupling]
+part = "allSeparated"; // [all:Complete Rocket, cone:Nose Cone, body:Body, finCan:Fin Can, payloadBody:Payload Body, payloadCoupling:Payload Coupling]
 
 // Show a cut-away section?  (warning: this can be really slow to render)
 section_view = "no";  // [yes:Yes, no:No]
@@ -114,7 +114,7 @@ cone_notched_coupling = false;
 guide_type = "rod";  // [rail:Rail, rod:Rod]
 
 // Show the guide position/fitting?
-show_guide = "no";  // [yes:Yes, no:No]
+show_guide = "yes";  // [yes:Yes, no:No]
 
 guide_rod_diameter = 3.5;
 
@@ -928,6 +928,24 @@ module rocket(e_type) {
 			translate([0,0, fin_can_height2 + body_height + 2perim + (payload == "yes" ? ph : 0)])
 				noseCone();
 		}
+
+        if (part == "allSeparated" || part == "") {
+            finCan(e_type);
+
+            translate([0,0, fin_can_height2 + body_height/2])
+                body();
+
+            if (payload == "yes") {
+                translate([0,0, fin_can_height2 + body_height + perim + body_height/2])
+                    payload_coupling();
+
+                translate([0,0, fin_can_height2 + body_height + payload_coupling_height2 + perim + body_height])
+                    payload_body();
+            }
+
+            translate([0,0, fin_can_height2 + body_height + 2perim + (payload == "yes" ? ph : 0) + body_height])
+                noseCone();
+        }
 
 		if (part == "finCan") finCan(e_type);
 		if (part == "cone") noseCone();
