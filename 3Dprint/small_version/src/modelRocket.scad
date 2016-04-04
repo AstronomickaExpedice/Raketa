@@ -1,7 +1,7 @@
 /* [Global] */
 
 // Which part(s) would you like to see?
-part = "cone"; // [all:Complete Rocket, cone:Nose Cone, body:Body, finCan:Fin Can, payloadBody:Payload Body, payloadCoupling:Payload Coupling]
+part = "all"; // [all:Complete Rocket, cone:Nose Cone, body:Body, finCan:Fin Can, payloadBody:Payload Body, payloadCoupling:Payload Coupling]
 
 // Show a cut-away section?  (warning: this can be really slow to render)
 section_view = "no";  // [yes:Yes, no:No]
@@ -12,7 +12,7 @@ section_view = "no";  // [yes:Yes, no:No]
 show_engine =  "no";  // [yes:Yes, no:No]
 
 // What type of rocket motor (Estes range)?
-engine_type = "cd";  // [mini:Mini, standard:Standard, cd:C or D Engine, e24:24mm E Engine, ef29:29mm E or F Engine]
+engine_type = "mini";  // [mini:Mini, standard:Standard, cd:C or D Engine, e24:24mm E Engine, ef29:29mm E or F Engine]
 
 // Clearance between motor and motor tube
 motor_tolerance = 0.3;
@@ -21,7 +21,7 @@ motor_tolerance = 0.3;
 /* [Fin Can] */
 
 // Inner diameter of rocket finCan and body sections
-inner_diameter = 40;  // [15 : 200]
+inner_diameter = 19;  // [15 : 200]
 
 // What type of fin shape?
 fin_type = "trapezoid"; // [trapezoid:Trapezoid, smooth:Smooth, sbend:S-bend]
@@ -29,7 +29,7 @@ fin_type = "trapezoid"; // [trapezoid:Trapezoid, smooth:Smooth, sbend:S-bend]
 // Height of fin can
 fin_can_height = 100;  // [50 : 200]
 
-number_of_fins = 4;  // [0 : 6]
+number_of_fins = 3;  // [0 : 6]
 
 // Width of fins
 fin_width = 40;  // [0 : 100]
@@ -77,7 +77,7 @@ payload_inner_diameter = 30;  // [15: 200]
 
 payload_coupling_height = 40; // [5 : 200]
 
-payload_coupling_type = "smooth"; // [flat:Flat, smooth:Smooth, radiused:Radiused]
+payload_coupling_type = "radiused"; // [flat:Flat, smooth:Smooth, radiused:Radiused]
 
 // Include a solid bulkhead at the base of the payload coupling?
 payload_bulkhead = "no";  // [yes:Yes, no:No]
@@ -93,7 +93,7 @@ payload_guide = "yes"; // [yes:Yes, no:No]
 
 cone_type = "haack";  // [flat:Flat, curved:Curved, bulb:Bulb, haack:Haack]
 
-cone_height = 100; // [10 : 200]
+cone_height = 70; // [10 : 200]
 
 cone_bulb_diameter = 20;  // [1 : 100]
 
@@ -106,6 +106,8 @@ cone_haack_constant = 0.3333;
 // Include a shockcord fixing at the base of the nose cone?
 shock_cord_fixing = "yes";  // [yes:Yes, no:No]
 
+// notched teeths on cone coupling
+cone_notched_coupling = false;
 
 /* [Guides] */
 
@@ -114,7 +116,7 @@ guide_type = "rod";  // [rail:Rail, rod:Rod]
 // Show the guide position/fitting?
 show_guide = "no";  // [yes:Yes, no:No]
 
-guide_rod_diameter = 3;
+guide_rod_diameter = 3.5;
 
 // Height of the guide tubes (for Rods)
 guide_tube_height = 35;
@@ -132,14 +134,14 @@ guide_rail_thickness = 1;
 one_big_solid = "no";  // [yes:Yes, no:No]
 
 // WWall thickness of the rocket shell/fins in mm - adjust to ensure model is sliced correctly - aim for 2 perimeters in your slicer
-perimeter_width = 1;
+perimeter_width = 0.61;
 
 // Curve precision (number of facets)
 curve_precision = 60;  // [6 : 64]
 
-coupling_height = 10;  // [5 : 50]
+coupling_height = 15;  // [5 : 50]
 
-coupling_tolerance = 0.3;
+coupling_tolerance = 0.5;
 
 
 /* [Hidden] */
@@ -477,7 +479,7 @@ module finCan(e_type) {
 		translate([0,0,el])
 			render()
 			difference() {
-				cylinder(r=edt/2 + perim, h=4perim);
+				cylinder(r= id/2 + perim, h=4perim);
 
 				translate([0,0,-eta])
 					cylinder(r1=edt/2 + perim, r2=edt/2 - 3*perim, h=4perim + 2*eta);
@@ -724,7 +726,7 @@ module noseCone() {
 		if (one_big_solid == "no") {
 			// coupling
 			translate([0,0, -coupling_height + eta])
-				coupling(id, coupling_height, true);
+				coupling(id, coupling_height, cone_notched_coupling);
 
 			// shock cord fixing
 			if (shock_cord_fixing == "yes") {
