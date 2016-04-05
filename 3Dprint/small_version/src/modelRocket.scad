@@ -1,7 +1,7 @@
 /* [Global] */
 
 // Which part(s) would you like to see?
-part = "allSeparated"; // [all:Complete Rocket, cone:Nose Cone, body:Body, finCan:Fin Can, payloadBody:Payload Body, payloadCoupling:Payload Coupling]
+part = "finCan"; // [all:Complete Rocket, cone:Nose Cone, body:Body, finCan:Fin Can, payloadBody:Payload Body, payloadCoupling:Payload Coupling]
 
 // Show a cut-away section?  (warning: this can be really slow to render)
 section_view = "no";  // [yes:Yes, no:No]
@@ -15,7 +15,7 @@ show_engine =  "no";  // [yes:Yes, no:No]
 engine_type = "mini";  // [mini:Mini, standard:Standard, cd:C or D Engine, e24:24mm E Engine, ef29:29mm E or F Engine]
 
 // Clearance between motor and motor tube
-motor_tolerance = 0.3;
+motor_tolerance = 0.7;
 
 
 /* [Fin Can] */
@@ -114,7 +114,7 @@ cone_notched_coupling = false;
 guide_type = "rod";  // [rail:Rail, rod:Rod]
 
 // Show the guide position/fitting?
-show_guide = "yes";  // [yes:Yes, no:No]
+show_guide = "no";  // [yes:Yes, no:No]
 
 guide_rod_diameter = 3.5;
 
@@ -141,7 +141,7 @@ curve_precision = 60;  // [6 : 64]
 
 coupling_height = 15;  // [5 : 50]
 
-coupling_tolerance = 0.5;
+coupling_tolerance = 0.8;
 
 
 /* [Hidden] */
