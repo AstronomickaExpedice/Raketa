@@ -1,7 +1,7 @@
 /* [Global] */
 
 // Which part(s) would you like to see?
-part = "finCan"; // [all:Complete Rocket, cone:Nose Cone, body:Body, finCan:Fin Can, payloadBody:Payload Body, payloadCoupling:Payload Coupling]
+part = "body"; // [all:Complete Rocket, cone:Nose Cone, body:Body, finCan:Fin Can, payloadBody:Payload Body, payloadCoupling:Payload Coupling]
 
 // Show a cut-away section?  (warning: this can be really slow to render)
 section_view = "no";  // [yes:Yes, no:No]
@@ -21,7 +21,7 @@ motor_tolerance = 0.7;
 /* [Fin Can] */
 
 // Inner diameter of rocket finCan and body sections
-inner_diameter = 19;  // [15 : 200]
+inner_diameter = 13;  // [15 : 200]
 
 // What type of fin shape?
 fin_type = "trapezoid"; // [trapezoid:Trapezoid, smooth:Smooth, sbend:S-bend]
@@ -141,7 +141,7 @@ curve_precision = 60;  // [6 : 64]
 
 coupling_height = 15;  // [5 : 50]
 
-coupling_tolerance = 0.8;
+coupling_tolerance = 1.0;
 
 
 /* [Hidden] */
@@ -457,85 +457,101 @@ module finCan(e_type) {
 	numSupports = round((PI*id) / 6);
 
 	color("white")
-	union() {
-		// outer casing
-		linear_extrude(height = h)
-			donut(id/2 + perim, id/2);
+    difference (){
+    	union() {
+    		// outer casing
+    		linear_extrude(height = h)
+    			donut(id/2 + perim, id/2);
 
-		// motor mount tube
-		linear_extrude(height = el + 10)
-			donut( edt/2 + 2perim, edt/2);
+    		// motor mount tube
+            motor_mount_tube_height = el + id/2;
+    		linear_extrude(height = motor_mount_tube_height)
+    			donut( edt/2 + 2perim, edt/2);
 
-		// motor mount to casing ribs
-		for(i=[0:fins-1])
-			rotate([0,0,i*360/fins])
-			translate([edt/2,0,0])
-			rotate([90,0,0])
-			linear_extrude(perim)
-			square([(id - edt)/2,el + 4*perim]);
+            // TODO motor mount top retainer
+            /*translate([0,0,motor_mount_tube_height])
+                render()
+                difference() {
+                    %cylinder(edt/2 + 2perim, h=4perim);
+
+                    translate([0,0,-eta])
+                        cylinder(r1=edt/2 + perim, r2=edt/2 - 3*perim, h=4perim + 2*eta);
+                }*/
+
+    		// motor mount to casing ribs
+    		for(i=[0:fins-1])
+    			rotate([0,0,i*360/fins])
+    			translate([edt/2,0,0])
+    			rotate([90,0,0])
+    			linear_extrude(perim)
+    			square([(id - edt)/2,el + 4*perim]);
 
 
-		// motor top retainer
-		translate([0,0,el])
-			render()
-			difference() {
-				cylinder(r= id/2 + perim, h=4perim);
+    		// motor top retainer
+    		translate([0,0,el])
+    			render()
+    			difference() {
+    				cylinder(r= id/2 + perim, h=4perim);
 
-				translate([0,0,-eta])
-					cylinder(r1=edt/2 + perim, r2=edt/2 - 3*perim, h=4perim + 2*eta);
-			}
+    				translate([0,0,-eta])
+    					cylinder(r1=edt/2 + perim, r2=edt/2 - 3*perim, h=4perim + 2*eta);
+    			}
 
-		// motor bottom retainer
-		// TO DO - doesn't seem critical, esp if tape is used for tight fit
+    		// motor bottom retainer
+    		// TO DO - doesn't seem critical, esp if tape is used for tight fit
 
-		// fins
-		for(i=[0:fins-1])
-			rotate([0,0,i*360/fins])
-			translate([id/2,0,0])
-			rotate([fin_twist,0,0])
-			rotate([90,0,0]) {
-				fin();
-			}
+    		// fins
+    		for(i=[0:fins-1])
+    			rotate([0,0,i*360/fins])
+    			translate([id/2,0,0])
+    			rotate([fin_twist,0,0])
+    			rotate([90,0,0]) {
+    				fin();
+    			}
 
-		if (fin_can_guide == "yes") {
-			if (guide_type == "rod" && fin_twist == 0) {
-				// guide tube
-				translate([guide_tube_offset,
-						   guide_rod_diameter/2,
-		   				   fin_tip_offset * (guide_tube_offset - inner_diameter/2)/fin_width + fin_tip_offset * 0.1])
-					rotate([0,0,90])
-					guideTube();
-			} else if (guide_type == "rail" ){
-				if (payload != "yes" || payload_inner_diameter <= inner_diameter )
-					guideButton();
-			}
-		}
+    		if (fin_can_guide == "yes") {
+    			if (guide_type == "rod" && fin_twist == 0) {
+    				// guide tube
+    				translate([guide_tube_offset,
+    						   guide_rod_diameter/2,
+    		   				   fin_tip_offset * (guide_tube_offset - inner_diameter/2)/fin_width + fin_tip_offset * 0.1])
+    					rotate([0,0,90])
+    					guideTube();
+    			} else if (guide_type == "rail" ){
+    				if (payload != "yes" || payload_inner_diameter <= inner_diameter )
+    					guideButton();
+    			}
+    		}
 
-		if (one_big_solid == "no") {
-			// coupling
-			translate([0,0, h - eta])
-				upperCoupling(id, coupling_height);
+    		if (one_big_solid == "no") {
+    			// coupling
+    			translate([0,0, h - eta])
+    				upperCoupling(id, coupling_height);
 
-			// shock cord tether
-			translate([0,0, el + 10 + 5/2 - eta])
-				cube([id + perim, 2, 5], center=true);
-		}
+    			// shock cord tether
+    			//translate([0,0, el])
+    			//	cube([id + perim, 2, 5], center=true);
+    		}
 
-		// print support
-		if (fin_can_print_support == "yes" && fin_tip_offset < 0) {
-			// radial supports, perim thick
-			for (i=[0:numSupports-1])
-				rotate([0,0, i * 360/numSupports])
-				translate([edt/2-1, -perim/2, fin_tip_offset])
-				cube([id/2 + perim - edt/2 + 2, perim, abs(fin_tip_offset)]);
+    		// print support
+    		if (fin_can_print_support == "yes" && fin_tip_offset < 0) {
+    			// radial supports, perim thick
+    			for (i=[0:numSupports-1])
+    				rotate([0,0, i * 360/numSupports])
+    				translate([edt/2-1, -perim/2, fin_tip_offset])
+    				cube([id/2 + perim - edt/2 + 2, perim, abs(fin_tip_offset)]);
 
-			// a little ring to join them all together
-			translate([0,0,fin_tip_offset])
-				linear_extrude(0.6)
-				donut(id/2, edt/2);
-		}
+    			// a little ring to join them all together
+    			translate([0,0,fin_tip_offset])
+    				linear_extrude(0.6)
+    				donut(id/2, edt/2);
+    		}
 
-	}
+    	}
+    translate([0,0, h])
+        rotate([135,0,0])
+            cylinder(r= 1, h=id);
+    }
 }
 
 
