@@ -1,7 +1,7 @@
 /* [Global] */
 
 // Which part(s) would you like to see?
-part = "body"; // [all:Complete Rocket, cone:Nose Cone, body:Body, finCan:Fin Can, payloadBody:Payload Body, payloadCoupling:Payload Coupling]
+part = "finCan"; // [all:Complete Rocket, cone:Nose Cone, body:Body, finCan:Fin Can, payloadBody:Payload Body, payloadCoupling:Payload Coupling]
 
 // Show a cut-away section?  (warning: this can be really slow to render)
 section_view = "no";  // [yes:Yes, no:No]
@@ -21,7 +21,7 @@ motor_tolerance = 0.7;
 /* [Fin Can] */
 
 // Inner diameter of rocket finCan and body sections
-inner_diameter = 13;  // [15 : 200]
+inner_diameter = 13 + motor_tolerance;  // [15 : 200]
 
 // What type of fin shape?
 fin_type = "trapezoid"; // [trapezoid:Trapezoid, smooth:Smooth, sbend:S-bend]
@@ -141,7 +141,7 @@ curve_precision = 60;  // [6 : 64]
 
 coupling_height = 15;  // [5 : 50]
 
-coupling_tolerance = 1.0;
+coupling_tolerance = 0.9;
 
 
 /* [Hidden] */
@@ -463,11 +463,16 @@ module finCan(e_type) {
     		linear_extrude(height = h)
     			donut(id/2 + perim, id/2);
 
-    		// motor mount tube
-            motor_mount_tube_height = el + id/2;
-    		linear_extrude(height = motor_mount_tube_height)
-    			donut( edt/2 + 2perim, edt/2);
-
+    		// motor mount tube apply in case of inner diameter is larger than motor mount diameter
+            if (ed > id) {
+                motor_mount_tube_height = el + id/2;
+        		linear_extrude(height = motor_mount_tube_height)
+        			donut( edt/2 + 2perim, edt/2);
+            }
+            else if (ed == id)
+                echo("INFO: Motor mount diameter is equal to hull diameter!");
+            else 
+                echo("ERROR: Motor mount diameter is smaller than the hull diameter!");
             // TODO motor mount top retainer
             /*translate([0,0,motor_mount_tube_height])
                 render()
