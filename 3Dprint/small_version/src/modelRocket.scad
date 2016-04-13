@@ -1,7 +1,7 @@
 /* [Global] */
 
 // Which part(s) would you like to see?
-part = "finCan"; // [all:Complete Rocket, cone:Nose Cone, body:Body, finCan:Fin Can, payloadBody:Payload Body, payloadCoupling:Payload Coupling]
+part = "body"; // [all:Complete Rocket, cone:Nose Cone, body:Body, finCan:Fin Can, payloadBody:Payload Body, payloadCoupling:Payload Coupling]
 
 // Show a cut-away section?  (warning: this can be really slow to render)
 section_view = "no";  // [yes:Yes, no:No]
@@ -27,7 +27,7 @@ inner_diameter = 13 + motor_tolerance;  // [15 : 200]
 fin_type = "trapezoid"; // [trapezoid:Trapezoid, smooth:Smooth, sbend:S-bend]
 
 // Height of fin can
-fin_can_height = 100;  // [50 : 200]
+fin_can_height = 120;  // [50 : 200]
 
 number_of_fins = 3;  // [0 : 6]
 
@@ -61,7 +61,7 @@ fin_can_print_support = "no";  // [yes:Yes, no:No]
 
 /* [Body] */
 
-body_height = 100; // [10 : 200]
+body_height = 120; // [10 : 200]
 
 // Include a launch guide on the body section
 body_guide = "yes"; // [yes:Yes, no:No]
@@ -464,15 +464,13 @@ module finCan(e_type) {
     			donut(id/2 + perim, id/2);
 
     		// motor mount tube apply in case of inner diameter is larger than motor mount diameter
-            if (ed > id) {
+            if (edt > id) {
                 motor_mount_tube_height = el + id/2;
         		linear_extrude(height = motor_mount_tube_height)
         			donut( edt/2 + 2perim, edt/2);
             }
-            else if (ed == id)
+            else if (edt == id)
                 echo("INFO: Motor mount diameter is equal to hull diameter!");
-            else 
-                echo("ERROR: Motor mount diameter is smaller than the hull diameter!");
             // TODO motor mount top retainer
             /*translate([0,0,motor_mount_tube_height])
                 render()
@@ -482,6 +480,10 @@ module finCan(e_type) {
                     translate([0,0,-eta])
                         cylinder(r1=edt/2 + perim, r2=edt/2 - 3*perim, h=4perim + 2*eta);
                 }*/
+
+            else 
+                echo("ERROR: Motor mount diameter is smaller than the hull diameter! Leaving the hull diameter for the mount.");
+
 
     		// motor mount to casing ribs
     		for(i=[0:fins-1])
