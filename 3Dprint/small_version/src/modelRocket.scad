@@ -1,7 +1,7 @@
 /* [Global] */
 
 // Which part(s) would you like to see?
-part = "body"; // [all:Complete Rocket, cone:Nose Cone, body:Body, finCan:Fin Can, payloadBody:Payload Body, payloadCoupling:Payload Coupling]
+part = "cone"; // [all:Complete Rocket, cone:Nose Cone, body:Body, finCan:Fin Can, payloadBody:Payload Body, payloadCoupling:Payload Coupling]
 
 // Show a cut-away section?  (warning: this can be really slow to render)
 section_view = "no";  // [yes:Yes, no:No]
@@ -134,7 +134,7 @@ guide_rail_thickness = 1;
 one_big_solid = "no";  // [yes:Yes, no:No]
 
 // WWall thickness of the rocket shell/fins in mm - adjust to ensure model is sliced correctly - aim for 2 perimeters in your slicer
-perimeter_width = 0.61;
+perimeter_width = 1.20;
 
 // Curve precision (number of facets)
 curve_precision = 60;  // [6 : 64]
@@ -166,12 +166,12 @@ guide_rail_angle = (360 / number_of_fins) / 2;
 // offset to outer face of rail
 guide_rail_offset = ((payload == "yes" ? max(payload_inner_diameter, inner_diameter) : inner_diameter) / 2) + 2*perim;
 
-// Engine parameters  (diameter, length)
-engine_mini = [13, 44];
-engine_standard = [18, 70];
-engine_cd = [24, 70];
-engine_e24 = [24, 95];
-engine_ef29 = [29, 114];
+// Engine parameters  (diameter, length, tube_thickness)
+engine_mini = [13, 44, 1.3];
+engine_standard = [18, 70, 2];
+engine_cd = [24, 70, 2];
+engine_e24 = [24, 95, 3];
+engine_ef29 = [29, 114, 3];
 
 engine_type_val = engine_type == "mini" ? engine_mini :
 				 	(engine_type == "standard" ? engine_standard :
@@ -449,6 +449,7 @@ module finCan(e_type) {
 
 	ed = e_type[0];
 	el = e_type[1];
+    et = e_type[2];
 
 	edt = (ed + motor_tolerance);
 
@@ -501,7 +502,7 @@ module finCan(e_type) {
     				cylinder(r= id/2 + perim, h=4perim);
 
     				translate([0,0,-eta])
-    					cylinder(r1=edt/2 + perim, r2=edt/2 - 3*perim, h=4perim + 2*eta);
+    					cylinder(r1=edt/2 + perim, r2=edt/2 - et, h=4perim + 2*eta);
     			}
 
     		// motor bottom retainer
@@ -535,9 +536,6 @@ module finCan(e_type) {
     			translate([0,0, h - eta])
     				upperCoupling(id, coupling_height);
 
-    			// shock cord tether
-    			//translate([0,0, el])
-    			//	cube([id + perim, 2, 5], center=true);
     		}
 
     		// print support
@@ -571,6 +569,10 @@ module body() {
 		// body tube
 		linear_extrude(height = h+eta)
 			donut( id/2 + perim, id/2);
+        
+        //shock cord tether
+        translate([0,0, h/10])
+        cube([id + perim, 2, 5], center=true);
 
 		if (
 			(payload != "yes" || payload_inner_diameter <= inner_diameter ) &&
