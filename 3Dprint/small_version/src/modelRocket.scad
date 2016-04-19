@@ -1,7 +1,7 @@
 /* [Global] */
 
 // Which part(s) would you like to see?
-part = "body"; // [all:Complete Rocket, cone:Nose Cone, body:Body, finCan:Fin Can, payloadBody:Payload Body, payloadCoupling:Payload Coupling]
+part = "finCan"; // [all:Complete Rocket, cone:Nose Cone, body:Body, finCan:Fin Can, payloadBody:Payload Body, payloadCoupling:Payload Coupling]
 
 // Show a cut-away section?  (warning: this can be really slow to render)
 section_view = "no";  // [yes:Yes, no:No]
@@ -15,7 +15,7 @@ show_engine =  "no";  // [yes:Yes, no:No]
 engine_type = "mini";  // [mini:Mini, standard:Standard, cd:C or D Engine, e24:24mm E Engine, ef29:29mm E or F Engine]
 
 // Clearance between motor and motor tube
-motor_tolerance = 0.7;
+motor_tolerance = 0.3;
 
 
 /* [Fin Can] */
@@ -116,7 +116,7 @@ guide_type = "rod";  // [rail:Rail, rod:Rod]
 // Show the guide position/fitting?
 show_guide = "no";  // [yes:Yes, no:No]
 
-guide_rod_diameter = 3.5;
+guide_rod_diameter = 2.9;
 
 // Height of the guide tubes (for Rods)
 guide_tube_height = 35;
@@ -141,7 +141,7 @@ curve_precision = 60;  // [6 : 64]
 
 coupling_height = 15;  // [5 : 50]
 
-coupling_tolerance = 0.9;
+coupling_tolerance = 0.4;
 
 
 /* [Hidden] */
@@ -499,10 +499,10 @@ module finCan(e_type) {
     		translate([0,0,el])
     			render()
     			difference() {
-    				cylinder(r= id/2 + perim, h=4perim);
+    				cylinder(r= id/2 + perim, h=2perim);
 
     				translate([0,0,-eta])
-    					cylinder(r1=edt/2 + perim, r2=edt/2 - et, h=4perim + 2*eta);
+    					cylinder(r1=edt/2, r2=edt/2 - et, h=2perim + 2*eta);
     			}
 
     		// motor bottom retainer
@@ -760,7 +760,7 @@ module noseCone() {
 					intersection() {
 						circle(id2/2);
 
-						square([id2, 2perim], center=true);
+						square([id2, perim], center=true);
 					}
 			}
 		}
