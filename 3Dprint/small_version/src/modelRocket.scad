@@ -1,7 +1,7 @@
 /* [Global] */
 
 // Which part(s) would you like to see?
-part = "cone"; // [all:Complete Rocket, cone:Nose Cone, body:Body, finCan:Fin Can, payloadBody:Payload Body, payloadCoupling:Payload Coupling]
+part = "body"; // [all:Complete Rocket, cone:Nose Cone, body:Body, finCan:Fin Can, payloadBody:Payload Body, payloadCoupling:Payload Coupling]
 
 // Show a cut-away section?  (warning: this can be really slow to render)
 section_view = "no";  // [yes:Yes, no:No]
@@ -571,7 +571,7 @@ module body() {
 			donut( id/2 + perim, id/2);
         
         //shock cord tether
-        translate([0,0, h/10])
+        translate([0,0, coupling_height + h/10])
         cube([id + perim, 2, 5], center=true);
 
 		if (
