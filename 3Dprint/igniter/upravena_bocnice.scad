@@ -53,6 +53,17 @@ module upravena_bocnice()
         }
     }
 
+//otvor ve dne.
+//--------------------------------------------------------
+    union()
+    {            
+        translate([-vzdalenost_der,vzdalenost_der*1.5,-vyska_bocnice+10])
+        {
+        //složí k posunu otvoru v násobku děr
+            cylinder(h=20, d = 5);        
+        }
+    }
+
 //Vytvoreni zadniho celicka krabicky
 //--------------------------------------------------------
  /*   translate([((pocet_der2-1)*vzdalenost_der)/2,(pocet_der1-1)*vzdalenost_der+vzdalenost_od_okraje+tloustka_bocnice/2,-(vyska_bocnice/2)])
