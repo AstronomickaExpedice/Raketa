@@ -13,11 +13,7 @@ include <../configuration.scad>
 //-------------------------------------------------------------
 
 difference () {
-translate([0,0,(vyska_bocnice/2)+tloustka_plbase])
-upravena_bocnice();
-
-
-    
-    
-    }
+    translate([0,0,(vyska_bocnice/2)+tloustka_plbase])
+        upravena_bocnice();
+}
 

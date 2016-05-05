@@ -23,7 +23,7 @@ module BH9VPC(wall_thickness)
 module button(wall_thickness)
 {
     rotate([90,0,0])
-        cylinder(h=20, d = 22);
+        cylinder(h=20, d = 23);
 }            
 
 
@@ -48,7 +48,7 @@ module upravena_bocnice()
         translate([-((pocet_der2-1)*vzdalenost_der)/2,-vzdalenost_od_okraje-tloustka_bocnice/2,-(vyska_bocnice/2)])
         {
         //složí k posunu otvoru v násobku děr
-        translate([6,5,(vyska_bocnice-13)/2])   
+        translate([2,5,(vyska_bocnice-13)/2])   
             BH9VPC(tloustka_bocnice,vzdalenost_der);         
         }
     }
@@ -60,7 +60,7 @@ module upravena_bocnice()
         translate([-vzdalenost_der,vzdalenost_der*1.5,-vyska_bocnice+10])
         {
         //složí k posunu otvoru v násobku děr
-            cylinder(h=20, d = 5);        
+            cylinder(h=20, d = 5.5);        
         }
     }
 
