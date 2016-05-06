@@ -53,7 +53,7 @@ module upravena_bocnice()
         }
     }
 
-//otvor ve dne.
+//otvor ve dne pro LED
 //--------------------------------------------------------
     union()
     {            
@@ -63,6 +63,16 @@ module upravena_bocnice()
             cylinder(h=20, d = 5.5);        
         }
     }
+
+    union()
+    {            
+        translate([-((pocet_der2-4)*vzdalenost_der)/2,(pocet_der1)*vzdalenost_der,0])
+        {
+        //dira pro LED
+        rotate([90,0,0])
+            cylinder(h=20, d = 5.5);        
+        }
+    }    
 
 //Vytvoreni zadniho celicka krabicky
 //--------------------------------------------------------
@@ -114,7 +124,7 @@ module upravena_bocnice()
        //složí k posunu otvoru v násobku děr
         translate([5,16,(vyska_bocnice)/2])
             rotate(a=[90,0,-90])
-                cylinder(h=20, d = 6);
+                cylinder(h=20, d = 10);
         }
     }
 }
