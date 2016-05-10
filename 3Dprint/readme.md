@@ -1,4 +1,4 @@
-#  Experimental printable rocket denigns
+#  Experimental printable rocket designs
 
 Repository contains two rocket types. 
 
