@@ -1,7 +1,7 @@
 /* [Global] */
 
 // Which part(s) would you like to see?
-part = "finCan"; // [all:Complete Rocket, cone:Nose Cone, body:Body, finCan:Fin Can, payloadBody:Payload Body, payloadCoupling:Payload Coupling]
+part = "all"; // [all:Complete Rocket, cone:Nose Cone, body:Body, finCan:Fin Can, payloadBody:Payload Body, payloadCoupling:Payload Coupling]
 
 // Show a cut-away section?  (warning: this can be really slow to render)
 section_view = "no";  // [yes:Yes, no:No]
@@ -12,7 +12,7 @@ section_view = "no";  // [yes:Yes, no:No]
 show_engine =  "no";  // [yes:Yes, no:No]
 
 // What type of rocket motor (Estes range)?
-engine_type = "mini";  // [mini:Mini, standard:Standard, cd:C or D Engine, e24:24mm E Engine, ef29:29mm E or F Engine]
+engine_type = "cd";  // [mini:Mini, standard:Standard, cd:C or D Engine, e24:24mm E Engine, ef29:29mm E or F Engine]
 
 // Clearance between motor and motor tube
 motor_tolerance = 0.3;
@@ -21,15 +21,15 @@ motor_tolerance = 0.3;
 /* [Fin Can] */
 
 // Inner diameter of rocket finCan and body sections
-inner_diameter = 13 + motor_tolerance;  // [15 : 200]
+inner_diameter = 27;  // [15 : 200]
 
 // What type of fin shape?
 fin_type = "trapezoid"; // [trapezoid:Trapezoid, smooth:Smooth, sbend:S-bend]
 
 // Height of fin can
-fin_can_height = 120;  // [50 : 200]
+fin_can_height = 100;  // [50 : 200]
 
-number_of_fins = 3;  // [0 : 6]
+number_of_fins = 4;  // [0 : 6]
 
 // Width of fins
 fin_width = 40;  // [0 : 100]
@@ -61,7 +61,7 @@ fin_can_print_support = "no";  // [yes:Yes, no:No]
 
 /* [Body] */
 
-body_height = 120; // [10 : 200]
+body_height = 100; // [10 : 200]
 
 // Include a launch guide on the body section
 body_guide = "yes"; // [yes:Yes, no:No]
@@ -77,7 +77,7 @@ payload_inner_diameter = 30;  // [15: 200]
 
 payload_coupling_height = 40; // [5 : 200]
 
-payload_coupling_type = "radiused"; // [flat:Flat, smooth:Smooth, radiused:Radiused]
+payload_coupling_type = "smooth"; // [flat:Flat, smooth:Smooth, radiused:Radiused]
 
 // Include a solid bulkhead at the base of the payload coupling?
 payload_bulkhead = "no";  // [yes:Yes, no:No]
@@ -93,7 +93,7 @@ payload_guide = "yes"; // [yes:Yes, no:No]
 
 cone_type = "haack";  // [flat:Flat, curved:Curved, bulb:Bulb, haack:Haack]
 
-cone_height = 70; // [10 : 200]
+cone_height = 100; // [10 : 200]
 
 cone_bulb_diameter = 20;  // [1 : 100]
 
@@ -106,8 +106,6 @@ cone_haack_constant = 0.3333;
 // Include a shockcord fixing at the base of the nose cone?
 shock_cord_fixing = "yes";  // [yes:Yes, no:No]
 
-// notched teeths on cone coupling
-cone_notched_coupling = false;
 
 /* [Guides] */
 
@@ -116,7 +114,7 @@ guide_type = "rod";  // [rail:Rail, rod:Rod]
 // Show the guide position/fitting?
 show_guide = "no";  // [yes:Yes, no:No]
 
-guide_rod_diameter = 2.9;
+guide_rod_diameter = 5;
 
 // Height of the guide tubes (for Rods)
 guide_tube_height = 35;
@@ -134,14 +132,14 @@ guide_rail_thickness = 1;
 one_big_solid = "no";  // [yes:Yes, no:No]
 
 // WWall thickness of the rocket shell/fins in mm - adjust to ensure model is sliced correctly - aim for 2 perimeters in your slicer
-perimeter_width = 1.20;
+perimeter_width = 1;
 
 // Curve precision (number of facets)
 curve_precision = 60;  // [6 : 64]
 
-coupling_height = 15;  // [5 : 50]
+coupling_height = 10;  // [5 : 50]
 
-coupling_tolerance = 0.4;
+coupling_tolerance = 0.3;
 
 
 /* [Hidden] */
@@ -166,12 +164,12 @@ guide_rail_angle = (360 / number_of_fins) / 2;
 // offset to outer face of rail
 guide_rail_offset = ((payload == "yes" ? max(payload_inner_diameter, inner_diameter) : inner_diameter) / 2) + 2*perim;
 
-// Engine parameters  (diameter, length, tube_thickness)
-engine_mini = [13, 44, 1.3];
-engine_standard = [18, 70, 2];
-engine_cd = [24, 70, 2];
-engine_e24 = [24, 95, 3];
-engine_ef29 = [29, 114, 3];
+// Engine parameters  (diameter, length)
+engine_mini = [13, 44];
+engine_standard = [18, 70];
+engine_cd = [24, 70];
+engine_e24 = [24, 95];
+engine_ef29 = [29, 114];
 
 engine_type_val = engine_type == "mini" ? engine_mini :
 				 	(engine_type == "standard" ? engine_standard :
@@ -449,7 +447,6 @@ module finCan(e_type) {
 
 	ed = e_type[0];
 	el = e_type[1];
-    et = e_type[2];
 
 	edt = (ed + motor_tolerance);
 
@@ -458,105 +455,85 @@ module finCan(e_type) {
 	numSupports = round((PI*id) / 6);
 
 	color("white")
-    difference (){
-    	union() {
-    		// outer casing
-    		linear_extrude(height = h)
-    			donut(id/2 + perim, id/2);
+	union() {
+		// outer casing
+		linear_extrude(height = h)
+			donut(id/2 + perim, id/2);
 
-    		// motor mount tube apply in case of inner diameter is larger than motor mount diameter
-            if (edt > id) {
-                motor_mount_tube_height = el + id/2;
-        		linear_extrude(height = motor_mount_tube_height)
-        			donut( edt/2 + 2perim, edt/2);
-            }
-            else if (edt == id)
-                echo("INFO: Motor mount diameter is equal to hull diameter!");
-            // TODO motor mount top retainer
-            /*translate([0,0,motor_mount_tube_height])
-                render()
-                difference() {
-                    %cylinder(edt/2 + 2perim, h=4perim);
+		// motor mount tube
+		linear_extrude(height = el + 10)
+			donut( edt/2 + 2perim, edt/2);
 
-                    translate([0,0,-eta])
-                        cylinder(r1=edt/2 + perim, r2=edt/2 - 3*perim, h=4perim + 2*eta);
-                }*/
-
-            else 
-                echo("ERROR: Motor mount diameter is smaller than the hull diameter! Leaving the hull diameter for the mount.");
+		// motor mount to casing ribs
+		for(i=[0:fins-1])
+			rotate([0,0,i*360/fins])
+			translate([edt/2,0,0])
+			rotate([90,0,0])
+			linear_extrude(perim)
+			square([(id - edt)/2,el + 4*perim]);
 
 
-    		// motor mount to casing ribs
-    		for(i=[0:fins-1])
-    			rotate([0,0,i*360/fins])
-    			translate([edt/2,0,0])
-    			rotate([90,0,0])
-    			linear_extrude(perim)
-    			square([(id - edt)/2,el + 4*perim]);
+		// motor top retainer
+		translate([0,0,el])
+			render()
+			difference() {
+				cylinder(r=edt/2 + perim, h=4perim);
 
+				translate([0,0,-eta])
+					cylinder(r1=edt/2 + perim, r2=edt/2 - 3*perim, h=4perim + 2*eta);
+			}
 
-    		// motor top retainer
-    		translate([0,0,el])
-    			render()
-    			difference() {
-    				cylinder(r= id/2 + perim, h=2perim);
+		// motor bottom retainer
+		// TO DO - doesn't seem critical, esp if tape is used for tight fit
 
-    				translate([0,0,-eta])
-    					cylinder(r1=edt/2, r2=edt/2 - et, h=2perim + 2*eta);
-    			}
+		// fins
+		for(i=[0:fins-1])
+			rotate([0,0,i*360/fins])
+			translate([id/2,0,0])
+			rotate([fin_twist,0,0])
+			rotate([90,0,0]) {
+				fin();
+			}
 
-    		// motor bottom retainer
-    		// TO DO - doesn't seem critical, esp if tape is used for tight fit
+		if (fin_can_guide == "yes") {
+			if (guide_type == "rod" && fin_twist == 0) {
+				// guide tube
+				translate([guide_tube_offset,
+						   guide_rod_diameter/2,
+		   				   fin_tip_offset * (guide_tube_offset - inner_diameter/2)/fin_width + fin_tip_offset * 0.1])
+					rotate([0,0,90])
+					guideTube();
+			} else if (guide_type == "rail" ){
+				if (payload != "yes" || payload_inner_diameter <= inner_diameter )
+					guideButton();
+			}
+		}
 
-    		// fins
-    		for(i=[0:fins-1])
-    			rotate([0,0,i*360/fins])
-    			translate([id/2,0,0])
-    			rotate([fin_twist,0,0])
-    			rotate([90,0,0]) {
-    				fin();
-    			}
+		if (one_big_solid == "no") {
+			// coupling
+			translate([0,0, h - eta])
+				upperCoupling(id, coupling_height);
 
-    		if (fin_can_guide == "yes") {
-    			if (guide_type == "rod" && fin_twist == 0) {
-    				// guide tube
-    				translate([guide_tube_offset,
-    						   guide_rod_diameter/2,
-    		   				   fin_tip_offset * (guide_tube_offset - inner_diameter/2)/fin_width + fin_tip_offset * 0.1])
-    					rotate([0,0,90])
-    					guideTube();
-    			} else if (guide_type == "rail" ){
-    				if (payload != "yes" || payload_inner_diameter <= inner_diameter )
-    					guideButton();
-    			}
-    		}
+			// shock cord tether
+			translate([0,0, el + 10 + 5/2 - eta])
+				cube([id + perim, 2, 5], center=true);
+		}
 
-    		if (one_big_solid == "no") {
-    			// coupling
-    			translate([0,0, h - eta])
-    				upperCoupling(id, coupling_height);
+		// print support
+		if (fin_can_print_support == "yes" && fin_tip_offset < 0) {
+			// radial supports, perim thick
+			for (i=[0:numSupports-1])
+				rotate([0,0, i * 360/numSupports])
+				translate([edt/2-1, -perim/2, fin_tip_offset])
+				cube([id/2 + perim - edt/2 + 2, perim, abs(fin_tip_offset)]);
 
-    		}
+			// a little ring to join them all together
+			translate([0,0,fin_tip_offset])
+				linear_extrude(0.6)
+				donut(id/2, edt/2);
+		}
 
-    		// print support
-    		if (fin_can_print_support == "yes" && fin_tip_offset < 0) {
-    			// radial supports, perim thick
-    			for (i=[0:numSupports-1])
-    				rotate([0,0, i * 360/numSupports])
-    				translate([edt/2-1, -perim/2, fin_tip_offset])
-    				cube([id/2 + perim - edt/2 + 2, perim, abs(fin_tip_offset)]);
-
-    			// a little ring to join them all together
-    			translate([0,0,fin_tip_offset])
-    				linear_extrude(0.6)
-    				donut(id/2, edt/2);
-    		}
-
-    	}
-    translate([0,0, h])
-        rotate([135,0,0])
-            cylinder(r= 1, h=id);
-    }
+	}
 }
 
 
@@ -569,10 +546,6 @@ module body() {
 		// body tube
 		linear_extrude(height = h+eta)
 			donut( id/2 + perim, id/2);
-        
-        //shock cord tether
-        translate([0,0, coupling_height + h/10])
-        cube([id + perim, 2, 5], center=true);
 
 		if (
 			(payload != "yes" || payload_inner_diameter <= inner_diameter ) &&
@@ -751,7 +724,7 @@ module noseCone() {
 		if (one_big_solid == "no") {
 			// coupling
 			translate([0,0, -coupling_height + eta])
-				coupling(id, coupling_height, cone_notched_coupling);
+				coupling(id, coupling_height, true);
 
 			// shock cord fixing
 			if (shock_cord_fixing == "yes") {
@@ -760,7 +733,7 @@ module noseCone() {
 					intersection() {
 						circle(id2/2);
 
-						square([id2, perim], center=true);
+						square([id2, 2perim], center=true);
 					}
 			}
 		}
@@ -953,24 +926,6 @@ module rocket(e_type) {
 			translate([0,0, fin_can_height2 + body_height + 2perim + (payload == "yes" ? ph : 0)])
 				noseCone();
 		}
-
-        if (part == "allSeparated" || part == "") {
-            finCan(e_type);
-
-            translate([0,0, fin_can_height2 + body_height/2])
-                body();
-
-            if (payload == "yes") {
-                translate([0,0, fin_can_height2 + body_height + perim + body_height/2])
-                    payload_coupling();
-
-                translate([0,0, fin_can_height2 + body_height + payload_coupling_height2 + perim + body_height])
-                    payload_body();
-            }
-
-            translate([0,0, fin_can_height2 + body_height + 2perim + (payload == "yes" ? ph : 0) + body_height])
-                noseCone();
-        }
 
 		if (part == "finCan") finCan(e_type);
 		if (part == "cone") noseCone();
