@@ -25,7 +25,7 @@ module screw_thread(od,st,lf0,lt,rs,cs)
     {
         if (cs >= -1)
         {
-           # thread_shape(cs,lt,or,ir,sn,st);
+           thread_shape(cs,lt,or,ir,sn,st);
         }
 
         full_thread(ttn,st,sn,zt,lfxy,or,ir);
