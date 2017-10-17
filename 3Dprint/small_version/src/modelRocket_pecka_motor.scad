@@ -17,7 +17,6 @@ engine_type = "mini";  // [mini:Mini, standard:Standard, cd:C or D Engine, e24:2
 // Clearance between motor and motor tube
 motor_tolerance = 0.3;
 
-
 /* [Fin Can] */
 
 // Inner diameter of rocket finCan and body sections
@@ -62,6 +61,9 @@ fin_can_print_support = "no";  // [yes:Yes, no:No]
 /* [Body] */
 
 body_height = 120; // [10 : 200]
+
+separation = body_height/2; // separaion of rocket parts in all rendering
+
 
 // Include a launch guide on the body section
 body_guide = "yes"; // [yes:Yes, no:No]
@@ -939,9 +941,11 @@ module rocket(e_type) {
 		if (part == "all" || part == "") {
 			finCan(e_type);
 
+			translate([0,0, separation])
+
 			translate([0,0, fin_can_height2])
 				body();
-
+			
 			if (payload == "yes") {
 				translate([0,0, fin_can_height2 + body_height + perim])
 					payload_coupling();
@@ -950,6 +954,7 @@ module rocket(e_type) {
 					payload_body();
 			}
 
+			translate([0,0, 2*separation])
 			translate([0,0, fin_can_height2 + body_height + 2perim + (payload == "yes" ? ph : 0)])
 				noseCone();
 		}
