@@ -7,7 +7,7 @@ module ogive_nose () {
 
     difference () {                 // bottom connection part  of the hull shell. 
         cylinder(r = radius, h = cone_connection_height , $fn=resolution);
-        cylinder(r = radius - wall, h = cone_connection_height, $fn=resolution);
+        translate([0,0,-clear]) cylinder(r = radius - wall, h = cone_connection_height+2*clear, $fn=resolution);
     }    
 }
 

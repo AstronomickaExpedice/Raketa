@@ -53,7 +53,7 @@ module lock_holl_in(radius, inner_radius, height, wall,  connection_lenght){
 		sphere(r=radius/3);
 
 		translate([0,0,(connection_lenght/2)-(radius/2)-clear ])
-		cylinder(r=radius-wall-clear, h=(radius/2)*2+2*clear);
+		cylinder(r=radius-wall, h=(radius/2)*2+2*clear);
 }
 
 
@@ -62,13 +62,13 @@ module payload_stage () {
 		union(){
 			difference () {                 // hull shell
 				cylinder(r = radius, h = connection_lenght);
-				cylinder(r = radius - wall, h = connection_lenght);
+				translate([0,0,-clear]) cylinder(r = radius - wall, h = connection_lenght + 2*clear);
 			}
 		
 			translate([0, 0, connection_lenght - clear ]){   // remove ribs to place stage connection section
 				difference () {                 // hull shell
 					cylinder(r = radius, h = height - 2*connection_lenght);
-					cylinder(r = radius - wall, h = height - 2*connection_lenght);
+					translate([0,0,-clear]) cylinder(r = radius - wall, h = height - 2*connection_lenght + 2*clear);
 				}
 		
 				/*difference () {
@@ -97,23 +97,16 @@ module payload_stage () {
 			translate([0, 0, height - connection_lenght])
 			difference () {                 // hull shell of connection part.
 					cylinder(r = radius - wall - clear, h = connection_lenght);
-					cylinder(r = radius - 2*wall - clear, h = connection_lenght);
+					translate([0,0,-clear]) cylinder(r = radius - 2*wall - clear, h = connection_lenght+2*clear);
 			}
 		
 			// bevel/smooth transformation between connection and rest of the rocket hull 
 		
 			translate([0, 0, height - connection_lenght - 3*wall])        
 			difference () {                
-				cylinder(               
-						r = radius,
-						h = 3*wall
-				);
-		
-				cylinder(               // bevel/smooth transformation between connection and rest of the rocket hull 
-						r1 = radius - wall,
-						r2 = radius - 2*wall  - clear,
-						h = 3*wall
-				);
+                // bevel/smooth transformation between connection and rest of the rocket hull 
+                cylinder(r = radius, h = 3*wall);
+				translate([0,0,-clear]) cylinder(r1 = radius - wall, r2 = radius - 2*wall  - clear, h = 3*wall + 2*clear);
 			}
 			lock_out(radius, inner_radius, height, wall, connection_lenght);
 			lock_holl_out(radius, inner_radius, height, wall, connection_lenght);
