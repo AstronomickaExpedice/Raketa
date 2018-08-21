@@ -7,8 +7,8 @@ stena = 1.5;
 
 module diraBok() {
     rotate([0, 90, 0]) hull() {
-        translate([-vyska/2+8, 0, 0]) cylinder(r=2, h=prumerMotoru+stena*2, center=true);
-        translate([vyska/2-8, 0, 0]) cylinder(r=2, h=prumerMotoru+stena*2, center=true);
+        translate([-vyska/2+8, 0, 0]) cylinder(r=4, h=prumerMotoru+stena*2, center=true);
+        translate([vyska/2-8, 0, 0]) cylinder(r=4, h=prumerMotoru+stena*2, center=true);
     }
 }
 
