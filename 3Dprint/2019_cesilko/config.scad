@@ -27,4 +27,10 @@ joint_space = 0.3;
 joint_thickness = 1;
 joint_transition_height = 2;
 
+//container
+container_diameter = 25;
+container_height = 50;
+container_transition = 10;
+hole_diameter = 2;
+
 outer_diameter = motor_diameter+motorwall_thickness*2;
