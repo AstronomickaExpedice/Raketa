@@ -31,7 +31,7 @@ module motor() {
     }
 
     if(liftoff_ring) {
-        rotate([0, 0, 9]) {
+        rotate([0, 0, ring_translate_angle]) {
             translate([outer_diameter/2+ring_diameter/2, 0, 0])
                 difference() {
                     cylinder(d=ring_diameter+ring_thickness*2, h=ring_height, $fn=40);
