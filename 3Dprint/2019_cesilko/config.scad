@@ -1,17 +1,17 @@
-//============== ROCKET PARAMETERS ==============//
+//========== ROCKET PARAMETERS ==========//
 
 //rocket
 wall_thickness = 0.9;
 motorwall_thickness = 2;
 module_height = 140;
-outer_diameter = motor_diameter+motorwall_thickness*2;
+
 
 //liftoff_ring
 liftoff_ring = true;
-ring_diameter = 4;
+ring_diameter = 4.2;
 ring_thickness = 1;
 ring_height = 10;
-ring_translate_angle = 11.5;
+ring_translate_angle = 11.9;
 
 //stabilizer
 stabilizer_thickness = 0.8;
@@ -39,9 +39,9 @@ hole_diameter = 2;
 //nosecone
 cone_height = 50;
 
+outer_diameter = motor_diameter+motorwall_thickness*2;
 
-
-//============== LAUNCHPAD PARAMETERS ==============//
+//========== LAUNCHPAD PARAMETERS ==========//
 
 //launchpad
 launch_rod_diameter = 1.5;
@@ -50,4 +50,3 @@ launchpad_width = 120;
 launchpad_deepth = 120;
 launchpad_height = 40;
 launchpad_fire_hole = 20;
-
