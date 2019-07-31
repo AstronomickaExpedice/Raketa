@@ -41,7 +41,7 @@ cone_height = 50;
 
 
 
-//============== LAUNCHPAD PARMETERS ==============//
+//============== LAUNCHPAD PARAMETERS ==============//
 
 //launchpad
 launch_rod_diameter = 1.5;
