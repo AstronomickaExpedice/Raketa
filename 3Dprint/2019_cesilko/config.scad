@@ -33,4 +33,7 @@ container_height = 50;
 container_transition = 10;
 hole_diameter = 2;
 
+//nosecone
+cone_height = 50;
+
 outer_diameter = motor_diameter+motorwall_thickness*2;

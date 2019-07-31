@@ -22,7 +22,7 @@ module container() {
 
         translate([0, 0, joint_height+container_transition/2])
             rotate([0, 90, 0])
-                #cylinder(d=hole_diameter, h=container_diameter, $fn=20);
+                cylinder(d=hole_diameter, h=container_diameter, $fn=20);
     }
 }
 
