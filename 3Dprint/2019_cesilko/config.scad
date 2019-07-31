@@ -1,7 +1,10 @@
+//============== ROCKET PARAMETERS ==============//
+
 //rocket
 wall_thickness = 0.9;
 motorwall_thickness = 2;
 module_height = 140;
+outer_diameter = motor_diameter+motorwall_thickness*2;
 
 //liftoff_ring
 liftoff_ring = true;
@@ -36,4 +39,15 @@ hole_diameter = 2;
 //nosecone
 cone_height = 50;
 
-outer_diameter = motor_diameter+motorwall_thickness*2;
+
+
+//============== LAUNCHPAD PARMETERS ==============//
+
+//launchpad
+launch_rod_diameter = 1.5;
+launch_rod_height = 250;
+launchpad_width = 120;
+launchpad_deepth = 120;
+launchpad_height = 40;
+launchpad_fire_hole = 20;
+
