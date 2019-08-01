@@ -42,7 +42,7 @@ cone_height = 50;
 //parachute ring
 parachute_ring_diameter = 11;
 parachute_ring_thickness = 2;
-parachute_ring_hole_count = 5;
+parachute_ring_hole_count = 6;
 parachute_ring_hole_distance = 0.75;
 parachute_ring_hole_diameter = 1.5;
 
