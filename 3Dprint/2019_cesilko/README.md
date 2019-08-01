@@ -8,6 +8,9 @@
 ### Nosecone
 ![image](img/nosecone.png "Nosecone")
 
+### Parachute ring
+![image](img/parachute_ring.png "Parachute ring")
+
 ### Container
 ![image](img/container.png "Container")
 
