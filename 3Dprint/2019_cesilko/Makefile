@@ -30,6 +30,5 @@ arrange: default
 	 $(SIMARRANGE) -x $(PLATE_DIMMENSIONS) -y $(PLATE_DIMMENSIONS) $(ARRANGE_TARGETS)
 	 
 clean:
-	rm -f calibration.stl
 	rm -f $(STL_DIR)/*.stl
 	rm -f $(IMG_DIR)/*.png
