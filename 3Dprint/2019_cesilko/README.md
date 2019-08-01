@@ -1,4 +1,7 @@
 # Small printable rocket for testing
+
+### designed for C6-3 rocket engine
+
 ![image](rocket.png "Rockt")
 
 ## 3D printed components
