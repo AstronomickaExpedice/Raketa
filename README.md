@@ -1,10 +1,24 @@
-Modular rocket design for student experiments
-============
+# Small printable rocket for testing
 
-[![Join the chat at https://gitter.im/expediceupice/Raketa](https://badges.gitter.im/expediceupice/Raketa.svg)](https://gitter.im/expediceupice/Raketa?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+### designed for C6-3 rocket engine
 
-Repository contains rocket models, FDM simulation, engine parameters and other related documents. 
+![image](rocket.png "Rockt")
 
+## 3D printed components
 
-![3D printable rocket design][./Rocket-V1.png]
+![image](img/sestava.png "Rocket")
 
+### Nosecone
+![image](img/nosecone.png "Nosecone")
+
+### Parachute ring
+![image](img/parachute_ring.png "Parachute ring")
+
+### Container
+![image](img/container.png "Container")
+
+### Hull
+![image](img/hull.png "Hull")
+
+### Motor block
+![image](img/motor.png "Motor block")
