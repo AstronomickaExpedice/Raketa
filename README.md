@@ -1,4 +1,5 @@
-# Small printable rocket for testing
+# EP-R1
+small 3D printed version of ***EP-R2*** rocket.
 
 ### designed for C6-3 rocket engine
 
