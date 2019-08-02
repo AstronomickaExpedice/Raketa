@@ -1,7 +1,7 @@
 # EP-R1
-small 3D printed version of ***EP-R2*** rocket.
-
-### designed for C6-3 rocket engine
+* small 3D printed version of ***EP-R2*** rocket.
+* created for testing and demonstration pruposes.
+* designed for C6-3 rocket engine.
 
 ![image](rocket.png "Rockt")
 
