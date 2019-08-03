@@ -1,4 +1,5 @@
-# EP-R1
+# ExpaRocket 1
+## EP-R1
 * small 3D printed version of ***EP-R2*** rocket.
 * created for testing and demonstration pruposes.
 * designed for C6-3 rocket engine.
