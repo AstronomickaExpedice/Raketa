@@ -1,11 +1,10 @@
 Modular rocket design for student experiments
 ============
 
-Repository contains roctket models, FDM simulation, engine prameters and other related documents. 
+[![Join the chat at https://gitter.im/expediceupice/Raketa](https://badges.gitter.im/expediceupice/Raketa.svg)](https://gitter.im/expediceupice/Raketa?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+Repository contains rocket models, FDM simulation, engine parameters and other related documents. 
 
 
+![3D printable rocket design][./Rocket-V1.png]
 
-OpenRoceket Usage
-==== 
-
-Run java OpenRocket-14.11.jar. Open configuration window, add our engine model:  JanPlechac_120Ns.eng Then restart OpenRocket and open the rocket simulation model "Raketa-v1.ork". 
